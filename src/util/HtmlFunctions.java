@@ -57,7 +57,7 @@ public class HtmlFunctions {
         writeHeader();
         Body body = new Body();
         Ul ul = new Ul();
-        int day=0;
+        int day=8;
         for (Event e : events) {
             if (e.getDayOfWeek()!=day){
                 day=e.getDayOfWeek();

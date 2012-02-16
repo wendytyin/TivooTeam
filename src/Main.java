@@ -25,11 +25,11 @@ public class Main {
         // s.loadFile("resources/dukecal.xml");
         // s.filterWordbyJDOM("ball");
         CalendarUtil util = new CalendarUtil();
-        CalParser s = util.chooseParser("resources/dukecal.xml");
+        CalParser s = util.chooseParser("resources/DukeBasketBall.xml");
         List<Event>events=s.parser();
         FilterComponent filter=new KeywordFilter();
 
-        events=filter.filter(events,"ball");
+        events=filter.filter(events,"Belmont");
 //        filter=new TimeFilter();
 //        events=filter.filter(events, "20111001");
         HtmlFunctions.writeListOfEvents(events);

@@ -78,7 +78,7 @@ public class Event implements Comparable<Event>{
         
         String rawdate = getStartTime();
         String[] mdy = rawdate.split("/");
-        int date = Integer.parseInt(mdy[0].substring(8));
+        int date = Integer.parseInt(mdy[0].substring(8).trim());
         weeks.set(Integer.parseInt(mdy[2]), Integer.parseInt(mdy[1]), date);
         
         int weekday = weeks.get(Calendar.DAY_OF_WEEK);
@@ -93,29 +93,20 @@ public class Event implements Comparable<Event>{
         //this is you
         String rawdate = getStartTime();
         String[] mdy = rawdate.split("/");
-        int date = Integer.parseInt(mdy[0].substring(8));
+        System.out.println(mdy[0]);
+        int date = Integer.parseInt(mdy[0].substring(8).trim());
         week1.set(Integer.parseInt(mdy[2]), Integer.parseInt(mdy[1]), date);
         
         //this is me
         String rawdate2 = getStartTime();
         String[] mdy2 = rawdate2.split("/");
-        int date2 = Integer.parseInt(mdy2[0].substring(8));
+        System.out.println(mdy[0]);
+        int date2 = Integer.parseInt(mdy2[0].substring(8).trim());
         week2.set(Integer.parseInt(mdy2[2]), Integer.parseInt(mdy2[1]), date2);
         
         return week1.compareTo(week2);
     }
 
-    private static Date parseStringYMdToDate(String date) {
-        Date output = null;
-        try {
-            output = CalendarUtil.simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return output;
-    }
-    
     
      
      

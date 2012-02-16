@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import xmlparsing.CalParser;
+import xmlparsing.DukeBasketBallParser;
 import xmlparsing.DukeCalenderParser;
 import xmlparsing.GoogleCalendarParser;
 
@@ -44,6 +45,7 @@ public class CalendarUtil {
         calendarList = new ArrayList<CalParser>();
         calendarList.add(new GoogleCalendarParser().loadFile(fileName));
         calendarList.add(new DukeCalenderParser().loadFile(fileName));
+        calendarList.add(new DukeBasketBallParser().loadFile(fileName));
 
     }
 }
