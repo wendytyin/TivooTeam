@@ -61,6 +61,7 @@ public class HtmlFunctions {
         for (Event e : events) {
             if (e.getDayOfWeek()!=day){
                 day=e.getDayOfWeek();
+                System.out.println(day);
                 H1 h1=new H1();
                 h1.appendText(daysOfWeek.get(day));
                 ul.appendChild(h1);

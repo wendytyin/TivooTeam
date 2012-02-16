@@ -3,6 +3,7 @@ package util;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 //from shawn, beta
 public class Event implements Comparable<Event>{
@@ -78,8 +79,8 @@ public class Event implements Comparable<Event>{
         
         String rawdate = getStartTime();
         String[] mdy = rawdate.split("/");
-        int date = Integer.parseInt(mdy[0].substring(8).trim());
-        weeks.set(Integer.parseInt(mdy[2]), Integer.parseInt(mdy[1]), date);
+        int date = Integer.parseInt(mdy[0].substring(mdy[0].length()-2).trim());
+        weeks.set(Integer.parseInt(mdy[2]), date-1 ,Integer.parseInt(mdy[1]));
         
         int weekday = weeks.get(Calendar.DAY_OF_WEEK);
         return weekday;
@@ -93,16 +94,14 @@ public class Event implements Comparable<Event>{
         //this is you
         String rawdate = getStartTime();
         String[] mdy = rawdate.split("/");
-        System.out.println(mdy[0]);
-        int date = Integer.parseInt(mdy[0].substring(8).trim());
-        week1.set(Integer.parseInt(mdy[2]), Integer.parseInt(mdy[1]), date);
+        int date = Integer.parseInt(mdy[0].substring(mdy[0].length()-2).trim());
+        week1.set(Integer.parseInt(mdy[2]),date-1, Integer.parseInt(mdy[1]));
         
         //this is me
         String rawdate2 = getStartTime();
         String[] mdy2 = rawdate2.split("/");
-        System.out.println(mdy[0]);
-        int date2 = Integer.parseInt(mdy2[0].substring(8).trim());
-        week2.set(Integer.parseInt(mdy2[2]), Integer.parseInt(mdy2[1]), date2);
+        int date2 = Integer.parseInt(mdy2[0].substring(mdy[0].length()-2).trim());
+        week2.set(Integer.parseInt(mdy2[2]), date2-1, Integer.parseInt(mdy2[1]));
         
         return week1.compareTo(week2);
     }
