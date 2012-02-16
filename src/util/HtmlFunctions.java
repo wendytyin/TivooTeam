@@ -5,13 +5,32 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.hp.gagawa.java.elements.*;
 
 public class HtmlFunctions {
     private static Html start;
-
+    private static final HashMap<Integer,String> daysOfWeek=new HashMap<Integer,String>();
+    static {
+        daysOfWeek.put(1, "Sunday");
+        daysOfWeek.put(2, "Monday");
+        daysOfWeek.put(3, "Tuesday");
+        daysOfWeek.put(4, "Wednesday");
+        daysOfWeek.put(5, "Thursday");
+        daysOfWeek.put(6, "Friday");
+        daysOfWeek.put(7, "Saturday");
+        
+    }
+    
     private static void writeHeader() {
         start = new Html();
         Head head = new Head();
@@ -23,9 +42,14 @@ public class HtmlFunctions {
     }
 
     public static void writeListOfEvents(List<Event> events) {
+        sortDatesIntoWeek(events);
          writeDetailPages(events);
         writeSummaryPage(events);
         System.out.println("finished writing to file");
+    }
+    
+    private static void sortDatesIntoWeek(List<Event>events){
+        Collections.sort(events);
     }
 
     // unordered list
@@ -33,7 +57,14 @@ public class HtmlFunctions {
         writeHeader();
         Body body = new Body();
         Ul ul = new Ul();
+        int day=0;
         for (Event e : events) {
+            if (e.getDayOfWeek()!=day){
+                day=e.getDayOfWeek();
+                H1 h1=new H1();
+                h1.appendText(daysOfWeek.get(day));
+                ul.appendChild(h1);
+            }
             Li li = new Li();
             A a = new A();
             a.setHref(e.getTitle()+".html");

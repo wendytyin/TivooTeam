@@ -28,13 +28,12 @@ public class Main {
         CalParser s = util.chooseParser("resources/dukecal.xml");
         List<Event>events=s.parser();
         FilterComponent filter=new KeywordFilter();
-        
+
         events=filter.filter(events,"ball");
-        filter=new TimeFilter();
-        events=filter.filter(events, "20111001");
+//        filter=new TimeFilter();
+//        events=filter.filter(events, "20111001");
         HtmlFunctions.writeListOfEvents(events);
         
-//        s.filterByTime("20111001");
         
         
     }
