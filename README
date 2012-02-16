@@ -1,8 +1,10 @@
-These are my prototypes for Tivoo. 
+Version 1 of our Tivoo
 
-They are based off of tutorials whose links are given at the top of DomParser.java, SaxParser.java, and Tags.java. 
-They also use gagawa, please download the jar if you want it to work properly
+Group members: 
+Wendy Yin wendytyin@gmail.com
+Sunny Sun <aznhui@gmail.com>
+jwalsh4867@gmail.com,
+ wangshiyuan88@gmail.com
+ 
+XML input files inside resources. Main has been run on dukecal.xml, its output is in output.
 
-Tags.java is (or should be) saving the info parsed from SaxParser.java.
-Main.java runs DomParser.java.
-SaxParser.java has its own main method

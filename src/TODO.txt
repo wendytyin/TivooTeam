@@ -1,0 +1,11 @@
+TODO FOR TIVOO 1
+-
+Composite class object (filter)
+has:
+list of other components
+operation to conduct on list
+tree traversal to search for appropriate tag
+calendar filter is a leaf
+
+html functions can take the product composite object of the filters 
+and output

@@ -1,35 +1,41 @@
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
-import org.w3c.dom.*;
-import org.xml.sax.XMLReader;
+import org.jdom.JDOMException;
+import org.w3c.dom.DOMException;
 
-import xmlparsers.DomParser;
-import xmlparsers.SaxParser;
+import util.CalendarUtil;
+import util.Event;
+import util.HtmlFunctions;
+import xmlparsing.*;
 
+import com.hp.gagawa.java.Document;
+
+import filters.*;
 
 public class Main {
 
-    private static Document document;
+    CalParser a;
 
-    public static void main(String[] args){
-        DomParser domparse;
-        try {
-            domparse = new DomParser("src\\simpletest.xml");
-            
-            domparse.printXML();
-            domparse.writeXMLtoFile();
-        } catch (ParserConfigurationException e) {
-            System.out.println("i have no idea what i'm doing");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
+    public static void main(String[] args) throws DOMException,
+            IOException, JDOMException {
+        // Tivoo s = new Tivoo();
+        // s.loadFile("resources/dukecal.xml");
+        // s.filterWordbyJDOM("ball");
+        CalendarUtil util = new CalendarUtil();
+        CalParser s = util.chooseParser("resources/dukecal.xml");
+        List<Event>events=s.parser();
+        FilterComponent filter=new KeywordFilter();
+        
+        events=filter.filter(events,"ball");
+        filter=new TimeFilter();
+        events=filter.filter(events, "20111001");
+        HtmlFunctions.writeListOfEvents(events);
+        
+//        s.filterByTime("20111001");
+        
+        
     }
-
-
 }
