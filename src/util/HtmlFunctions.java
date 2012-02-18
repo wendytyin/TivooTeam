@@ -49,7 +49,7 @@ public class HtmlFunctions {
     }
     
     private static void sortDatesIntoWeek(List<Event>events){
-        Collections.sort(events);
+        Collections.sort(events); //todo: sort by day of week too
     }
 
     // unordered list
@@ -61,14 +61,13 @@ public class HtmlFunctions {
         for (Event e : events) {
             if (e.getDayOfWeek()!=day){
                 day=e.getDayOfWeek();
-                System.out.println(day);
                 H1 h1=new H1();
                 h1.appendText(daysOfWeek.get(day));
                 ul.appendChild(h1);
             }
             Li li = new Li();
             A a = new A();
-            a.setHref(e.getTitle()+".html");
+            a.setHref(e.gettimeStamp()+".html"); //TODO: MAKE MORE SAFE for overlapping time stamps
             a.appendText(e.getTitle());
             li.appendChild(a);
             li.appendChild(new Br());
@@ -97,7 +96,7 @@ public class HtmlFunctions {
             body.appendChild(p);
             start.appendChild(body);
             
-            File f=new File("output/"+e.getTitle()+".html");
+            File f=new File("output/"+e.gettimeStamp()+".html");
 
             try {
                 FileWriter fstream = new FileWriter(f);

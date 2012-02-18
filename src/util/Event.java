@@ -5,12 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-//from shawn, beta
 public class Event implements Comparable<Event>{
      private String title;
      private String starttime;
      private String endtime;
-     private String timeStamp;
+     private String timeStamp; //Note: a timeStamp is the start date, formatted yyyymmdd
      private String link;
      
      public Event() {
@@ -77,10 +76,11 @@ public class Event implements Comparable<Event>{
     public int getDayOfWeek() {
         Calendar weeks=Calendar.getInstance();
         
-        String rawdate = getStartTime();
-        String[] mdy = rawdate.split("/");
-        int date = Integer.parseInt(mdy[0].substring(mdy[0].length()-2).trim());
-        weeks.set(Integer.parseInt(mdy[2]), date-1 ,Integer.parseInt(mdy[1]));
+        String rawdate = gettimeStamp();
+        String year=rawdate.substring(0, 4);
+        String month=rawdate.substring(4, 6);
+        String day=rawdate.substring(6, 8);
+        weeks.set(Integer.parseInt(year), Integer.parseInt(month)-1 ,Integer.parseInt(day));
         
         int weekday = weeks.get(Calendar.DAY_OF_WEEK);
         return weekday;
@@ -92,22 +92,23 @@ public class Event implements Comparable<Event>{
         Calendar week2=Calendar.getInstance();
         
         //this is you
-        String rawdate = getStartTime();
-        String[] mdy = rawdate.split("/");
-        int date = Integer.parseInt(mdy[0].substring(mdy[0].length()-2).trim());
-        week1.set(Integer.parseInt(mdy[2]),date-1, Integer.parseInt(mdy[1]));
+        String rawdate = o.gettimeStamp();
+        String year=rawdate.substring(0, 4);
+        String month=rawdate.substring(4, 6);
+        String day=rawdate.substring(6, 8);
+        week1.set(Integer.parseInt(year), Integer.parseInt(month)-1 ,Integer.parseInt(day));
+        
         
         //this is me
-        String rawdate2 = getStartTime();
-        String[] mdy2 = rawdate2.split("/");
-        int date2 = Integer.parseInt(mdy2[0].substring(mdy[0].length()-2).trim());
-        week2.set(Integer.parseInt(mdy2[2]), date2-1, Integer.parseInt(mdy2[1]));
+        String rawdate2 = gettimeStamp();
+        String year2=rawdate2.substring(0, 4);
+        String month2=rawdate2.substring(4, 6);
+        String day2=rawdate2.substring(6, 8);
+        week2.set(Integer.parseInt(year2), Integer.parseInt(month2)-1 ,Integer.parseInt(day2));
         
-        return week1.compareTo(week2);
+        
+        return week2.compareTo(week1);
     }
 
-    
-     
-     
 }
 
