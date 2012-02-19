@@ -11,6 +11,7 @@ import xmlparsing.CalParser;
 import xmlparsing.DukeBasketBallParser;
 import xmlparsing.DukeCalenderParser;
 import xmlparsing.GoogleCalendarParser;
+import xmlparsing.ParserException;
 
 public class CalendarUtil {
 
@@ -23,7 +24,7 @@ public class CalendarUtil {
         try {
             output = simpleDateFormat.parse(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO: MODIFY EXCEPTION, DO NOT RETURN NULL
             return null;
         }
         return output;
@@ -37,7 +38,7 @@ public class CalendarUtil {
                 return calParser;
         }
 
-        throw new Error("This calendar type is not recognized.");
+        throw new ParserException("Calendar type not recognized.",ParserException.Type.CALENDAR_TYPE);
 
     }
 

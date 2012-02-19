@@ -31,11 +31,22 @@ public abstract class CalParser {
 
     public abstract ArrayList<Event> parseEvent(Element root);
 
-    public List<Event> parser() throws JDOMException, IOException {
+    //WHAT ABOUT ATTRIBUTES? -wendy
+    
+    public List<Event> parser(){
         File inputXml = new File(fileName);
         SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(inputXml);
-        ArrayList<Event>events = parseEvent(document.getRootElement());
+        ArrayList<Event>events=new ArrayList<Event>();
+        try {
+            Document document = saxBuilder.build(inputXml);
+            events.addAll(parseEvent(document.getRootElement()));
+        } catch (JDOMException e) {
+            System.err.println("Problem building parsed document");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Problem opening file "+fileName);
+            e.printStackTrace();
+        }
         return events;
     }
 

@@ -19,22 +19,18 @@ public class Main {
 
     CalParser a;
 
-    public static void main(String[] args) throws DOMException,
-            IOException, JDOMException {
-        // Tivoo s = new Tivoo();
-        // s.loadFile("resources/dukecal.xml");
-        // s.filterWordbyJDOM("ball");
+    //TODO: CATCH THOSE EXCEPTIONS
+    public static void main(String[] args){
+        
         CalendarUtil util = new CalendarUtil();
-        CalParser s = util.chooseParser("resources/DukeBasketBall.xml");
+        CalParser s = util.chooseParser("resources/googlecal.xml");
         List<Event>events=s.parser();
         FilterComponent filter=new KeywordFilter();
 
-        events=filter.filter(events,"Belmont");
+        events=filter.filter(events,"Meet");
 //        filter=new TimeFilter();
-//        events=filter.filter(events, "20111001");
+//        events=filter.filter(events, "20110930");
         HtmlFunctions.writeListOfEvents(events);
-        
-        
         
     }
 }
