@@ -6,5 +6,5 @@ Sunny Sun <aznhui@gmail.com>
 jwalsh4867@gmail.com,
  wangshiyuan88@gmail.com
  
-XML input files inside resources. Main has been run on dukecal.xml, its output is in output.
+XML input files inside resources. All parsers are now tested; output files are currently those given by running Main as-is
 
