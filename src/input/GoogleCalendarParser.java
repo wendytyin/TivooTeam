@@ -53,7 +53,7 @@ public class GoogleCalendarParser extends CalParser {
             if(content.indexOf("EDT")!=-1)
             {  startTime = content.substring(0, content.indexOf("EDT"));}
             else 
-            	{startTime = content.substring(0, content.indexOf("<"));}
+            	{startTime = content.substring(0, content.indexOf("<"));} //TODO: make safer (doesn't work if <br /> instead of &lt;br /&gt;)
       
             event.setStartTime(startTime);
             event.setEndTime(null);
