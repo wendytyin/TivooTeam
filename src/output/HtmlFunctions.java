@@ -17,15 +17,15 @@ import com.hp.gagawa.java.elements.*;
 
 public class HtmlFunctions {
     private Html start;
-    private final HashMap<Integer, String> daysOfWeek = new HashMap<Integer, String>();
-    {
-        daysOfWeek.put(1, "Sunday");
-        daysOfWeek.put(2, "Monday");
-        daysOfWeek.put(3, "Tuesday");
-        daysOfWeek.put(4, "Wednesday");
-        daysOfWeek.put(5, "Thursday");
-        daysOfWeek.put(6, "Friday");
-        daysOfWeek.put(7, "Saturday");
+    private static final HashMap<Integer, String> DAYS_OF_WK = new HashMap<Integer, String>();
+    static{
+        DAYS_OF_WK.put(1, "Sunday");
+        DAYS_OF_WK.put(2, "Monday");
+        DAYS_OF_WK.put(3, "Tuesday");
+        DAYS_OF_WK.put(4, "Wednesday");
+        DAYS_OF_WK.put(5, "Thursday");
+        DAYS_OF_WK.put(6, "Friday");
+        DAYS_OF_WK.put(7, "Saturday");
     }
 
     public void writeListOfEvents(List<Event> events) {
@@ -112,7 +112,7 @@ public class HtmlFunctions {
 
     private Node writeDayOfWeek(int day) {
         H1 h1 = new H1();
-        h1.appendText(daysOfWeek.get(day));
+        h1.appendText(DAYS_OF_WK.get(day));
         return h1;
     }
 
