@@ -21,7 +21,7 @@ public class CalendarUtil {
     private void loadCalendarParser() {
         calendarList = new ArrayList<CalParser>();
         calendarList.add(new GoogleCalendarParser().loadFile(fileName));
-        calendarList.add(new DukeCalenderParser().loadFile(fileName));
+        calendarList.add(new DukeCalendarParser().loadFile(fileName));
         calendarList.add(new DukeBasketBallParser().loadFile(fileName));
 
     }

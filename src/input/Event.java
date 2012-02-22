@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 //TODO: Make sure timestamps are formatted correctly, throw exception if not?
 public class Event implements Comparable<Event> {
@@ -14,7 +15,15 @@ public class Event implements Comparable<Event> {
                               // yyyymmdd
     private String link;
 
-    public Event() {
+    public Event(List<String> eventComponent) {
+        if (eventComponent.size()<5){
+            throw new Error("Event does not have enough details");
+        }
+        title=eventComponent.remove(0);
+        starttime=eventComponent.remove(0);
+        endtime=eventComponent.remove(0);
+        timeStamp=eventComponent.remove(0);
+        link=eventComponent.remove(0);
     }
 
     public void stringOutput() {
@@ -52,25 +61,6 @@ public class Event implements Comparable<Event> {
         return timeStamp;
     }
 
-    public void setTitle(String mytitle) {
-        this.title = mytitle;
-    }
-
-    public void settimeStamp(String myTimeStamp) {
-        this.timeStamp = myTimeStamp;
-    }
-
-    public void setStartTime(String myStartTime) {
-        this.starttime = myStartTime;
-    }
-
-    public void setEndTime(String myEndTime) {
-        this.endtime = myEndTime;
-    }
-
-    public void setLink(String myLink) {
-        this.link = myLink;
-    }
 
     public int getDayOfWeek() {
         Calendar weeks = Calendar.getInstance();

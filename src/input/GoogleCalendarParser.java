@@ -1,15 +1,11 @@
 package input;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 
 public class GoogleCalendarParser extends CalParser {
 
@@ -19,16 +15,22 @@ public class GoogleCalendarParser extends CalParser {
             return true;
 
         else
+
             return false;
     }
 
 	public ArrayList<Event> parseEvent(Element root) {
+//        CalendarUtil cal = new CalendarUtil();
+  
     	List<Element> events = root.getChildren();
+        
         List<Element> entry = forEntry(events); 
         
         ArrayList<Event> filterEvents = new ArrayList<Event>();
+
         for (int i = 0; i < entry.size(); i++) {
-            Event event = new Event();
+
+        	List<String> eventComponent = new ArrayList<String>();
             Map<String, Element> componentMap = forComponent(entry.get(i));
 
             String[] date = componentMap.get("content").getText().split(" ");
@@ -47,19 +49,21 @@ public class GoogleCalendarParser extends CalParser {
                 str = str.append(firstDateStamp);
             }
            
-            event.setTitle(componentMap.get("title").getText());
             String content = componentMap.get("content").getText();
             String startTime = null;
             if(content.indexOf("EDT")!=-1)
             {  startTime = content.substring(0, content.indexOf("EDT"));}
             else 
-            	{startTime = content.substring(0, content.indexOf("<"));} //TODO: make safer (doesn't work if <br /> instead of &lt;br /&gt;)
-      
-            event.setStartTime(startTime);
-            event.setEndTime(null);
-            event.setLink(componentMap.get("id").getText());
-            event.settimeStamp(str.toString());
+            	{startTime = content.substring(0, content.indexOf("<"));}
+
+            eventComponent.add(componentMap.get("title").getText());
+            eventComponent.add(startTime);
+            eventComponent.add(null);
+            eventComponent.add(str.toString());
+            eventComponent.add(componentMap.get("id").getText());
+            Event event = new Event(eventComponent);
             filterEvents.add(event);
+
         }
         return filterEvents;
     }
@@ -90,7 +94,7 @@ public class GoogleCalendarParser extends CalParser {
 		return entry;
 	}
 	 
-	private String parseMonth(String month) { //TODO? throw exception if String mon stays null
+	private String parseMonth(String month) {
         String mon = null;
         String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
                 "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -102,7 +106,6 @@ public class GoogleCalendarParser extends CalParser {
             }
         }
         return mon;
-
     }
 
     private String parseDay(String day) {
@@ -111,24 +114,9 @@ public class GoogleCalendarParser extends CalParser {
         if (k > 0 && k < 10)
             we = "0" + we;
         return we;
+
     }
-  
-/*    public String genRecurTimeStamp(String firstDateStamp, Event lastEvent)
-    {  
-    	String timeStamp = null;
-    	String lastTimeStamp = lastEvent.getTimeStamp();
-    	int thisWeekDay = getweekday(firstDateStamp);
-    	int lastWeekDay = lastEvent.getDayOfWeek();
-        if(thisWeekDay == lastWeekDay) return lastTimeStamp;     
-        else
-        	{
-        	int lastDigit = Integer.parseInt(""+lastTimeStamp.charAt(lastTimeStamp.length()-1));
-        	timeStamp = lastTimeStamp.substring(0,lastTimeStamp.length()-2)+"0"+lastDigit;
-        	return timeStamp;
-        	}
-    	
-    }*/
-    
+//    
 //    public int getweekday(String timeStamp)
 //    {
 //    	Calendar weeks=Calendar.getInstance();
