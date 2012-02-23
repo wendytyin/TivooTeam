@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -17,15 +16,15 @@ import com.hp.gagawa.java.elements.*;
 
 public class HtmlFunctions {
     private Html start;
-    private static final HashMap<Integer, String> DAYS_OF_WK = new HashMap<Integer, String>();
-    static{
-        DAYS_OF_WK.put(1, "Sunday");
-        DAYS_OF_WK.put(2, "Monday");
-        DAYS_OF_WK.put(3, "Tuesday");
-        DAYS_OF_WK.put(4, "Wednesday");
-        DAYS_OF_WK.put(5, "Thursday");
-        DAYS_OF_WK.put(6, "Friday");
-        DAYS_OF_WK.put(7, "Saturday");
+    private final HashMap<Integer, String> daysOfWeek = new HashMap<Integer, String>();
+    {
+        daysOfWeek.put(1, "Sunday");
+        daysOfWeek.put(2, "Monday");
+        daysOfWeek.put(3, "Tuesday");
+        daysOfWeek.put(4, "Wednesday");
+        daysOfWeek.put(5, "Thursday");
+        daysOfWeek.put(6, "Friday");
+        daysOfWeek.put(7, "Saturday");
     }
 
     public void writeListOfEvents(List<Event> events) {
@@ -112,18 +111,32 @@ public class HtmlFunctions {
 
     private Node writeDayOfWeek(int day) {
         H1 h1 = new H1();
-        h1.appendText(DAYS_OF_WK.get(day));
+        h1.appendText(daysOfWeek.get(day));
         return h1;
     }
 
     private void writeToFile(File filename) {
+        BufferedWriter out = null;
         try {
-            BufferedWriter out = openFile(filename);
+            out = openFile(filename);
             out.write(start.write());
-            closeFile(out);
         } catch (IOException e) {
-            System.err.println("unable to write to file " + filename.getName()); // TODO:EXCEPTIONS
+            System.err.println("unable to write to file " + filename.getName());
             e.printStackTrace();
+        } finally {
+            if (out != null) {
+                System.out.println("Closing Buffered Writer in HtmlFunctions");
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.err
+                            .println("Buffered Writer file didn't close properly");
+                }
+            } else {
+                System.out
+                        .println("Buffered Writer in HtmlFunctions never opened");
+            }
         }
     }
 
@@ -131,16 +144,6 @@ public class HtmlFunctions {
         FileWriter fstream = new FileWriter(filename);
         BufferedWriter out = new BufferedWriter(fstream);
         return out;
-    }
-
-    private void closeFile(Writer out) {
-        try {
-            out.close();
-        } catch (IOException e) {
-            System.err.println("unable to close file"); // TODO: print which
-                                                        // file it is too
-            e.printStackTrace();
-        }
     }
 
     private void sortDatesIntoWeek(List<Event> events) {
