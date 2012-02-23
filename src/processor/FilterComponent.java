@@ -9,11 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 public abstract class FilterComponent {
-    
-
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"yyyyMMdd");
-
 
 	public List<Event> filter(List<Event> events, String keyWord) {
 		List<Event> filtEvents = new ArrayList<Event>();
@@ -28,17 +23,5 @@ public abstract class FilterComponent {
 	}
 
 	abstract boolean filterSpecificEvent(Event i, String keyWord);
-	
-	protected Date parseStringYMdToDate(String date) {
-        Date output = null;
-        try {
-            output = simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            System.err.println("Cannot parse date "+date+" into year-month-date format");
-            e.printStackTrace();
-            return null;
-        }
-        return output;
-	}
 
 }
