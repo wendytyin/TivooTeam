@@ -30,7 +30,6 @@ public class GoogleCalendarParser extends CalParser {
 
         for (int i = 0; i < entry.size(); i++) {
 
-        	List<String> eventComponent = new ArrayList<String>();
             Map<String, Element> componentMap = forComponent(entry.get(i));
 
             String[] date = componentMap.get("content").getText().split(" ");
@@ -56,12 +55,7 @@ public class GoogleCalendarParser extends CalParser {
             else 
             	{startTime = content.substring(0, content.indexOf("<"));}
 
-            eventComponent.add(componentMap.get("title").getText());
-            eventComponent.add(startTime);
-            eventComponent.add(null);
-            eventComponent.add(str.toString());
-            eventComponent.add(componentMap.get("id").getText());
-            Event event = new Event(eventComponent);
+            Event event = new Event(componentMap.get("title").getText(),startTime,null,str.toString(),componentMap.get("id").getText());
             filterEvents.add(event);
 
         }

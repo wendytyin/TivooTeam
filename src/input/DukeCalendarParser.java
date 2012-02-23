@@ -23,7 +23,6 @@ public class DukeCalendarParser extends CalParser {
 
         for (int i = 0; i < events.size(); i++) {
 
-            List<String> eventComponent = new ArrayList<String>();
             String title = events.get(i).getChildText("summary");
             String endtime = events.get(i).getChild("end").getChildText("time")
                     + " "
@@ -35,12 +34,8 @@ public class DukeCalendarParser extends CalParser {
             String timeStamp = events.get(i).getChild("start")
                     .getChildText("unformatted").substring(0, 8);
             String link = events.get(i).getChildText("link");
-            eventComponent.add(title);
-            eventComponent.add(starttime);
-            eventComponent.add(endtime);
-            eventComponent.add(timeStamp);
-            eventComponent.add(link);
-            Event event = new Event(eventComponent);
+            
+            Event event = new Event(title,starttime,endtime,timeStamp,link);
             filterEvents.add(event);
 
         }

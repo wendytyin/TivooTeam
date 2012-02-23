@@ -15,15 +15,12 @@ public class Event implements Comparable<Event> {
                               // yyyymmdd
     private String link;
 
-    public Event(List<String> eventComponent) {
-        if (eventComponent.size()<5){
-            throw new Error("Event does not have enough details");
-        }
-        title=eventComponent.remove(0);
-        starttime=eventComponent.remove(0);
-        endtime=eventComponent.remove(0);
-        timeStamp=eventComponent.remove(0);
-        link=eventComponent.remove(0);
+    public Event(String otitle,String start,String end,String timestamp,String url) {
+        title=otitle;
+        starttime=start;
+        endtime=end;
+        timeStamp=timestamp;
+        link=url;
     }
 
     public void stringOutput() {

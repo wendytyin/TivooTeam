@@ -20,8 +20,7 @@ public class DukeBasketBallParser extends CalParser {
         List<Element> events = root.getChildren("Calendar");
         ArrayList<Event> filterEvents = new ArrayList<Event>();
         for (int i = 0; i < events.size(); i++) {
-
-            List<String> eventComponent = new ArrayList<String>();
+            
             String title = events.get(i).getChildText("Subject");
             String time[] = events.get(i).getChildText("StartDate").split("/");
             for (int j = 0; j < 2; j++) {
@@ -38,12 +37,7 @@ public class DukeBasketBallParser extends CalParser {
             String link = events.get(i).getChildText("Description");
             link = link.substring(link.indexOf("http"));
 
-            eventComponent.add(title);
-            eventComponent.add(starttime);
-            eventComponent.add(endtime);
-            eventComponent.add(timeStamp);
-            eventComponent.add(link);
-            Event event = new Event(eventComponent);
+            Event event = new Event(title,starttime,endtime,timeStamp,link);
             filterEvents.add(event);
         }
         return filterEvents;
