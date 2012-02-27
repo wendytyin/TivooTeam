@@ -32,8 +32,7 @@ public class CalendarDayPage extends HtmlPageWriters {
     public void write(List<Event> events, String day) {
         body.appendText("Day: "+day);
         List<Event> filtered = filterByDay(events, day);
-        sortByStartDate(filtered);
-        super.write(filtered);
+        super.write(sortByStartDate(filtered));
     }
 
     // page containing all events, links to detailed pages

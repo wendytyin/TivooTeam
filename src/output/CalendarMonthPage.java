@@ -42,8 +42,8 @@ public class CalendarMonthPage extends HtmlPageWriters {
     //if this is not called, then no filtering happens
     public void write(List<Event> events, String month) {
         List<Event> filtered = filterByDate(events, month);
-        sortByStartDate(filtered);
-        super.write(filtered);
+        super.write(
+        sortByStartDate(filtered));
     }
     
     public void writeEvent(Event e) {

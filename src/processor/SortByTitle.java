@@ -11,7 +11,7 @@ public class SortByTitle extends Sorters{
     @Override
     public List<Event> sort(List<Event> events) {
         List<Event>events2=new ArrayList<Event>();
-        Collections.copy(events2, events);
+        events2.addAll(events);
         Event.TitleComparator emptyInner=emptyOuter.new TitleComparator();
         Collections.sort(events2,emptyInner);
         return events2;

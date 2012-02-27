@@ -11,7 +11,7 @@ public class SortByStartDate extends Sorters{
     @Override
     public List<Event> sort(List<Event> events) {
         List<Event>events2=new ArrayList<Event>();
-        Collections.copy(events2, events);
+        events2.addAll(events);
         Event.StartTimeComparator emptyInner=emptyOuter.new StartTimeComparator();
         Collections.sort(events2,emptyInner);
         return events2;

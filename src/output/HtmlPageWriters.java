@@ -90,8 +90,8 @@ public abstract class HtmlPageWriters {
     }
 
 
-    protected void sortByStartDate(List<Event> events) {
-        startsort.sort(events);
+    protected List<Event> sortByStartDate(List<Event> events) {
+        return startsort.sort(events);
     }
 
 }

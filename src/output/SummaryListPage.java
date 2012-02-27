@@ -3,6 +3,7 @@ package output;
 import input.Event;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class SummaryListPage extends HtmlPageWriters {
         ul = new Ul();
     }
     public void write(List<Event> events) {
-        sortByStartDate(events);
-        super.write(events);
+        super.write(
+        sortByStartDate(events));
     }
     
     // page containing all events, links to detailed pages

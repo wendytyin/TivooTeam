@@ -14,8 +14,7 @@ public abstract class Sorters {
     
     public List<Event> reverseSort(List<Event>events){
         List<Event>events2=new ArrayList<Event>();
-        Collections.copy(events2, events);
-        sort(events2);
+        events2=sort(events);
         Collections.reverse(events2);
         return events2;
     }

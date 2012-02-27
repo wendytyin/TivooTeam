@@ -54,8 +54,8 @@ public class CalendarWeekPage extends HtmlPageWriters {
 
     public void write(List<Event> events, String week) {
         List<Event> filtered = filterByDate(events, week);
-        sortByStartDate(filtered);
-        super.write(filtered);
+        super.write(
+        sortByStartDate(filtered));
     }
 
     // page containing all events, links to detailed pages
@@ -131,15 +131,15 @@ public class CalendarWeekPage extends HtmlPageWriters {
         writeToFile(filename, start);
     }
 
-    public static void main(String[] args) {
-        List<Event> tester = new ArrayList<Event>();
-        tester.add(new Event("title1", "201201011100", "201201011300",
-                "www.google.com", "descrp1"));
-        tester.add(new Event("title3", "201201081100", "201201081300",
-                "www.msn.com", "descrp1"));
-        tester.add(new Event("title2", "201201011400", "201201011600",
-                "www.yahoo.com", "descrp2"));
-        CalendarWeekPage something = new CalendarWeekPage();
-        something.write(tester, "201201");
-    }
+//    public static void main(String[] args) {
+//        List<Event> tester = new ArrayList<Event>();
+//        tester.add(new Event("title1", "201201011100", "201201011300",
+//                "www.google.com", "descrp1"));
+//        tester.add(new Event("title3", "201201081100", "201201081300",
+//                "www.msn.com", "descrp1"));
+//        tester.add(new Event("title2", "201201011400", "201201011600",
+//                "www.yahoo.com", "descrp2"));
+//        CalendarWeekPage something = new CalendarWeekPage();
+//        something.write(tester, "201201");
+//    }
 }
