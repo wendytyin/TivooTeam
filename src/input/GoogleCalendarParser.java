@@ -9,116 +9,167 @@ import org.jdom.Element;
 
 public class GoogleCalendarParser extends CalParser {
 
-    @Override
-    public boolean isThisKindof() {
-        if (fileName.equals("resources/googlecal.xml"))
-            return true;
+	@Override
+	public boolean isThisKindof() {
+		if (fileName.equals("resources/googlecal.xml"))
+			return true;
 
-        else
+		else
 
-            return false;
-    }
+			return false;
+	}
 
 	public ArrayList<Event> parseEvent(Element root) {
-//        CalendarUtil cal = new CalendarUtil();
-  
-    	List<Element> events = root.getChildren();
-        
-        List<Element> entry = forEntry(events); 
-        
-        ArrayList<Event> filterEvents = new ArrayList<Event>();
+		// CalendarUtil cal = new CalendarUtil();
 
-        for (int i = 0; i < entry.size(); i++) {
+		List<Element> events = root.getChildren();
 
-            Map<String, Element> componentMap = forComponent(entry.get(i));
+		List<Element> entry = forEntry(events);
 
-            String[] date = componentMap.get("content").getText().split(" ");
+		ArrayList<Event> filterEvents = new ArrayList<Event>();
 
-            StringBuilder str = new StringBuilder();
+		for (int i = 0; i < entry.size(); i++) {
 
-            if (date[0].equals("When:")) {
-                date[3] = date[3].substring(0, date[3].length() - 1);
-                str.append(date[4].substring(0, 4)).append(parseMonth(date[2]))
-                        .append(parseDay(date[3]));
-            }
-            
-            if(date[0].equals("Recurring"))
-            {
-            	String firstDateStamp = date[4].replaceAll("-", "");
-                str = str.append(firstDateStamp);
-            }
-           
-            String content = componentMap.get("content").getText();
-            String startTime = null;
-            if(content.indexOf("EDT")!=-1)
-            {  startTime = content.substring(0, content.indexOf("EDT"));}
-            else 
-            	{startTime = content.substring(0, content.indexOf("<"));}
+			Map<String, Element> componentMap = forComponent(entry.get(i));
 
-            Event event = new Event(componentMap.get("title").getText(),startTime,null,str.toString(),componentMap.get("id").getText());
-            filterEvents.add(event);
-
-        }
-        return filterEvents;
-    }
-    
-    private Map forComponent(Element entry)
-    {
-    	Map<String, Element> componentMap = new HashMap<String, Element>();
-    	List<Element> entryChildren = entry.getChildren();
-		for(Element e : entryChildren)
-		{    
-			if(e.getName().equals("content")){
-				componentMap.put("content",e);
+			String[] date = componentMap.get("content").getText().split(" ");
+			String startTime = null;
+			String endTime = null;
+			StringBuilder str = new StringBuilder();
+          
+			if (date[0].equals("When:")) {
+				date[3] = date[3].substring(0, date[3].length() - 1);
+				str.append(date[4].substring(0, 4)).append(parseMonth(date[2]))
+						.append(parseDay(date[3]));
+			    startTime = str.toString()+genDetailTime(date[5]);
+			    endTime = str.toString()+genDetailTime(date[7]);
 			}
-			if(e.getName().equals("id"))componentMap.put("id",e);
-			if(e.getName().equals("title"))componentMap.put("title",e);
+        
+			if (date[0].equals("Recurring")) {
+				String firstDateStamp = date[4].replaceAll("-", "");
+				str = str.append(firstDateStamp);
+				String temp[] = date[5].split(":");
+				startTime = str.toString()+date[5].replaceAll(":","").substring(0,4);
+				endTime = startTime;
 				
+				//int duration = Integer.parseInt(date[9]);
+				//endTime = startTime.substring(0,8)+Integer.toString((Integer.parseInt(startTime.substring(8,10))+duration/60))
+				//		+Integer.toString((Integer.parseInt(startTime.substring(10))+duration%60));
+				
+			}
+
+			String content = componentMap.get("content").getText();
+			
+/*			if (content.indexOf("EDT") != -1) {
+				startTime = content.substring(0, content.indexOf("EDT"));
+			} else {
+				startTime = content.substring(0, content.indexOf("<"));
+			}*/
+
+			Event event = new Event(componentMap.get("title").getText(),
+					startTime, endTime, componentMap.get("id")
+							.getText(),"");
+			filterEvents.add(event);
+
+		}
+		return filterEvents;
+	}
+
+	private Map forComponent(Element entry) {
+		Map<String, Element> componentMap = new HashMap<String, Element>();
+		List<Element> entryChildren = entry.getChildren();
+		for (Element e : entryChildren) {
+			if (e.getName().equals("content")) {
+				componentMap.put("content", e);
+			}
+			if (e.getName().equals("id"))
+				componentMap.put("id", e);
+			if (e.getName().equals("title"))
+				componentMap.put("title", e);
+
 		}
 		return componentMap;
-    }
- 
+	}
+
 	private List<Element> forEntry(List<Element> events) {
-    	List<Element> entry = new ArrayList<Element>();
-    	for(Element e : events)
-        {
-        	if(e.getName().equals("entry"))
-        		entry.add(e);
-        }
+		List<Element> entry = new ArrayList<Element>();
+		for (Element e : events) {
+			if (e.getName().equals("entry"))
+				entry.add(e);
+		}
 		return entry;
 	}
-	 
+
 	private String parseMonth(String month) {
-        String mon = null;
-        String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-                "Aug", "Sep", "Oct", "Nov", "Dec" };
-        for (int k = 0; k < 12; k++) {
-            if (month.equals(MONTHS[k])) {
-                mon = String.valueOf(k + 1);
-                if (k > 0 && k < 9)
-                    mon = "0" + mon;
-            }
-        }
-        return mon;
-    }
+		String mon = null;
+		String[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+				"Aug", "Sep", "Oct", "Nov", "Dec" };
+		for (int k = 0; k < 12; k++) {
+			if (month.equals(MONTHS[k])) {
+				mon = String.valueOf(k + 1);
+				if (k > 0 && k < 9)
+					mon = "0" + mon;
+			}
+		}
+		return mon;
+	}
 
-    private String parseDay(String day) {
-        String we = day;
-        int k = Integer.parseInt(day);
-        if (k > 0 && k < 10)
-            we = "0" + we;
-        return we;
+	private String parseDay(String day) {
+		String we = day;
+		int k = Integer.parseInt(day);
+		if (k > 0 && k < 10)
+			we = "0" + we;
+		return we;
 
-    }
-//    
-//    public int getweekday(String timeStamp)
-//    {
-//    	Calendar weeks=Calendar.getInstance();
-//    	String year=timeStamp.substring(0, 4);
-//        String month=timeStamp.substring(4, 6);
-//        String day=timeStamp.substring(6, 8);
-//        weeks.set(Integer.parseInt(year), Integer.parseInt(month)-1 ,Integer.parseInt(day));
-//        return  weeks.get(Calendar.DAY_OF_WEEK);
-//    }
-    
+	}
+	
+	public String genDetailTime(String time)
+	{   String[] temp = null;
+		if(!time.contains("pm")&&!time.contains("am"))
+			return "0000";
+	    
+	   if(time.contains("pm")&&time.contains(":"))
+		{
+			temp = time.split(":");
+			temp[0] = Integer.toString(Integer.parseInt(temp[0])+12);
+			return temp[0]+temp[1].substring(0,2);
+		}
+		if(time.contains("pm")&&!time.contains(":"))
+		{
+			if(time.length()==3)
+				return "0"+Integer.toString(Integer.parseInt(time.substring(0,1))+12)+"00";
+			else
+			return Integer.toString(Integer.parseInt(time.substring(0,2))+12)+"00";
+		}
+	    if(!time.contains("pm")&&time.contains(":"))
+	    {
+	    	temp = time.split(":");
+	    	if(temp[0].length() == 1)
+	    		temp[0] = "0" + temp[0]; 
+	         return temp[0] + temp[1].substring(0,2);
+	    }
+		if(!time.contains("pm")&&!time.contains(":"))
+		{
+			if(time.length()==3)
+			{
+				return "0"+time.substring(0,1)+"00";
+			}
+			else
+				return time.substring(0,2)+"00";
+		}
+	
+		return null;
+	}
+	//
+	// public int getweekday(String timeStamp)
+	// {
+	// Calendar weeks=Calendar.getInstance();
+	// String year=timeStamp.substring(0, 4);
+	// String month=timeStamp.substring(4, 6);
+	// String day=timeStamp.substring(6, 8);
+	// weeks.set(Integer.parseInt(year), Integer.parseInt(month)-1
+	// ,Integer.parseInt(day));
+	// return weeks.get(Calendar.DAY_OF_WEEK);
+	// }
+
 }

@@ -7,33 +7,39 @@ import java.util.Date;
 import java.util.List;
 
 import input.Event;
+import java.util.*;
 
-public class TimeFilter extends FilterComponent{
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-            "yyyyMMdd");
+public class TimeFilter implements FilterComponent{
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmm");
 
-    @Override
-    boolean filterSpecificEvent(Event i, String keyWord) {
-        if (i.gettimeStamp() == null) {
-            return true; 
-        }
+    public ArrayList<Event> filter(List<Event>events,String[] timeStamps) {
+		ArrayList<Event> filtEvents = new ArrayList<Event>();
+    	for(String timeStamp : timeStamps){
+    		Date standard = parseStringYMdhmToDate(timeStamp);
+    		for (Event i : events) {
+    			if (i.getStartTime() == null) {
+    				filtEvents.add(i);
+    				i.stringOutput();
+    			}
 
-        Date standard = parseStringYMdToDate(keyWord);
-        Date eventDate = parseStringYMdToDate(i.gettimeStamp());
-        long bias = eventDate.getTime() / 86400000 - standard.getTime()
-                / 86400000;
-        if (bias <= 7 && bias >= 0) {
-            return true;
-        }
-        return false;
+    			Date eventDate = parseStringYMdhmToDate(i.getStartTime());
+    			long bias = eventDate.getTime() / 86400000 - standard.getTime()
+    					/ 86400000;
+    			if (bias <= 7 && bias >= 0) {
+    				filtEvents.add(i);
+    				i.stringOutput();
+    			}
+    		}
+    	}
+        return filtEvents;
     }
 
-    protected Date parseStringYMdToDate(String date) {
+    private Date parseStringYMdhmToDate(String date) {
         Date output = null;
         try {
             output = simpleDateFormat.parse(date);
         } catch (ParseException e) {
-            System.err.println("Cannot parse date "+date+" into year-month-date format");
+            System.err.println("Cannot parse date "+date+" into year-month-date format"); //TODO: EXCEPTION
             e.printStackTrace();
             return null;
         }

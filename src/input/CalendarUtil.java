@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CalendarUtil {
 
-    private  ArrayList<CalParser> calendarList;
+    private ArrayList<CalParser> calendarList;
     String fileName;
 
 
@@ -23,6 +23,9 @@ public class CalendarUtil {
         calendarList.add(new GoogleCalendarParser().loadFile(fileName));
         calendarList.add(new DukeCalendarParser().loadFile(fileName));
         calendarList.add(new DukeBasketBallParser().loadFile(fileName));
+        calendarList.add(new NFLParser().loadFile(fileName));
+        calendarList.add(new TvParser().loadFile(fileName));
+        
 
     }
 }

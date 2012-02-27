@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.Vector;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -16,22 +17,21 @@ public abstract class CalParser {
 	protected String fileName;
 	private String keyWord; // What are these?
 	private Stack<Element> refinedEvents; // What are these?
-
+    private static List<CalParser> parserList ;
+    private List<Event> events;
 	public CalParser loadFile(String name) {
 		fileName = name;
 		return this;
 	}
 
 	public abstract boolean isThisKindof();
-
 	public abstract ArrayList<Event> parseEvent(Element root);
 
-	// WHAT ABOUT ATTRIBUTES? -Wendy
 
 	public List<Event> parser() {
 		File inputXml = new File(fileName);
 		SAXBuilder saxBuilder = new SAXBuilder();
-		ArrayList<Event> events = new ArrayList<Event>();
+		events = new ArrayList<Event>();
 		try {
 			Document document = saxBuilder.build(inputXml);
 			events.addAll(parseEvent(document.getRootElement()));
@@ -44,4 +44,38 @@ public abstract class CalParser {
 		}
 		return events;
 	}
+	
+    public List<Event> mergeparser(CalParser other)
+    {
+    	List<Event> newList = getEvents();
+		newList.addAll(other.getEvents());
+    	return newList;
+    }
+
+	public List<Event> getEvents()
+	{
+		return events;
+	}
+	
+	/*	public static List<Event> mergeparser()
+	{
+        loadParser();
+		ArrayList<Event> events = new ArrayList<Event>();
+		for(CalParser parser: parserList)
+		{  	
+		events.addAll(parser.parser());
+		}
+		return events;
+	}
+	
+	public static void loadParser()
+	{
+	    parserList = new ArrayList<CalParser>();
+		parserList.add(new DukeCalendarParser().loadFile("resources/dukecal.xml"));
+		parserList.add(new GoogleCalendarParser().loadFile("resources/googlecal.xml"));
+		parserList.add(new DukeBasketBallParser().loadFile("resources/DukeBasketBall.xml"));
+		parserList.add(new NFLParser().loadFile("resources/NFL.xml"));
+	//	parserList.add(new TvParser().loadFile("resources/tv.xml"));   // Tv.xml can not be loaded currently
+	}*/
+	
 }
