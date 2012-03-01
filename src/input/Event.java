@@ -1,9 +1,6 @@
 package input;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
-
 
 public class Event {
 	private String title;
@@ -11,7 +8,7 @@ public class Event {
 	private String endtime;
 	private String link;
 	private String detail;
-	private ArrayList<Integer> compareInfo;
+
 
 	public Event(String otitle, String start, String end, String url,
 			String descri) {
@@ -91,65 +88,6 @@ public class Event {
 		int weekday = weeks.get(Calendar.DAY_OF_WEEK);
 		return weekday;
 	}
-
-	/**
-	 * sets compareInfo to values corresponding to the string comparisons for 
-	 * [title,start time, end time]
-	 */
-	public void getCompareInfo(Event o1, Event o2) {
-		compareInfo = new ArrayList<Integer>();
-		compareInfo.add(((Event) o1).getTitle().compareTo(
-				(((Event) o2).getTitle())));
-		compareInfo.add(((Event) o1).getStartTime().compareTo(
-				(((Event) o2).getStartTime())));
-		compareInfo.add(((Event) o1).getEndTime().compareTo(
-				(((Event) o2).getEndTime())));
-	}
-
-	public class StartTimeComparator implements Comparator {
-		@Override
-		// StartTime is primary concern, then title, then endtime
-		public int compare(Object o1, Object o2) {
-			getCompareInfo((Event) o1, (Event) o2);
-			return getCompareResult(compareInfo.get(1), compareInfo.get(0),
-					compareInfo.get(2));
-
-		}
-	}
-
-	public class EndTimeComparator implements Comparator {
-
-		@Override
-		// EndTime is primary concern, then title, then start time
-		public int compare(Object o1, Object o2) {
-			getCompareInfo((Event) o1, (Event) o2);
-			return getCompareResult(compareInfo.get(2), compareInfo.get(0),
-					compareInfo.get(1));
-		}
-	}
-
-	public class TitleComparator implements Comparator {
-		@Override
-		// Title is primary concern, then StartTime, then End time
-		public int compare(Object o1, Object o2) {
-			getCompareInfo((Event) o1, (Event) o2);
-			return getCompareResult(compareInfo.get(0), compareInfo.get(1),
-					compareInfo.get(2));
-		}
-
-	}
-
-    public int getCompareResult(int firstConcern, int secondConcern,
-            int thirdConcern) {
-        if (firstConcern==0){
-            if (secondConcern == 0) {
-                return thirdConcern;
-            } else {
-                return secondConcern;
-            }
-        }
-        return firstConcern;
-    }
 
 
 	/**
