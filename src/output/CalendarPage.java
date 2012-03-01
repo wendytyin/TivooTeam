@@ -50,5 +50,4 @@ public abstract class CalendarPage extends HtmlPageWriters {
         tr.appendChild(new Td().appendText("Saturday"));
         return tr;
     }
-
 }

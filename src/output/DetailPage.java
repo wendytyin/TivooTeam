@@ -67,5 +67,4 @@ public class DetailPage extends HtmlPageWriters{
     protected List<Event> applyFilter(List<Event> events) {
         return events; //no filter
     }
-
 }

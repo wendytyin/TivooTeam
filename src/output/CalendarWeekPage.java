@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.hp.gagawa.java.FertileNode;
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
@@ -78,7 +79,6 @@ public class CalendarWeekPage extends CalendarPage {
     protected String getType(){
         return "Week_";
     }
-
 //    public static void main(String[] args) {
 //        List<Event> tester = new ArrayList<Event>();
 //        tester.add(new Event("title1", "201201011100", "201201011300",

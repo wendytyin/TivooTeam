@@ -11,7 +11,7 @@ import com.hp.gagawa.java.elements.*;
 public class SummaryListPage extends HtmlPageWriters {
 
     private int day = 8;
-    
+
     private HashMap<Integer, String> daysOfWeek = new HashMap<Integer, String>();
     {
         daysOfWeek.put(1, "Sunday");
@@ -23,11 +23,10 @@ public class SummaryListPage extends HtmlPageWriters {
         daysOfWeek.put(7, "Saturday");
     }
 
-
-    public SummaryListPage(){
-        super("Summary_List",new Body(), new Ul());
+    public SummaryListPage() {
+        super("Summary_List", new Body(), new Ul());
     }
-    
+
     // page containing all events, links to detailed pages
     protected void attachEvent(Event e, Node o) {
         if (e.getDayOfWeek() != day) { // days of the week headers
@@ -51,7 +50,8 @@ public class SummaryListPage extends HtmlPageWriters {
         a.appendText(e.getTitle());
         li.appendChild(a);
         li.appendChild(new Br());
-        li.appendText(e.getFormattedStartTime() + " | " + e.getFormattedEndTime());
+        li.appendText(e.getFormattedStartTime() + " | "
+                + e.getFormattedEndTime());
         return li;
     }
 
@@ -59,7 +59,7 @@ public class SummaryListPage extends HtmlPageWriters {
     protected String getFileName() {
         return "output/summary_List.html";
     }
-    
+
     @Override
     protected List<Event> applyFilter(List<Event> events) {
         return sortByStartDate(events);
