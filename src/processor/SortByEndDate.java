@@ -1,20 +1,12 @@
 package processor;
 
 import input.Event;
-import input.Event.StartTimeComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
 
-public class SortByEndDate extends Sorters{
-    
+public class SortByEndDate extends Sorters {
     @Override
-    public List<Event> sort(List<Event> events) {
-        List<Event>events2=new ArrayList<Event>();
-        events2.addAll(events);
-        Event.EndTimeComparator emptyInner=emptyOuter.new EndTimeComparator();
-        Collections.sort(events2,emptyInner);
-        return events2;
+    protected Comparator<Event> getComparator() {
+        return new EndTimeComparator();
     }
 }
