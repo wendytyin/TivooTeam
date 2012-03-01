@@ -29,6 +29,8 @@ public class Main {
         List<Event> events = s.mergeparser(s2);
         FilterComponent filter = new KeywordFilter();
         events = filter.filter(events,keyWords);
+        filter = new ExcludeFilter();
+        events = filter.filter(events, keyWords);
         filter = new TimeFilter();
         events = filter.filter(events,timeStamps);
         filter = new DetailFilter();
@@ -36,11 +38,18 @@ public class Main {
         Sorters sorter = new SortByStartDate();
         events = sorter.sort(events);
         sorter = new SortByEndDate();
-        events = sorter.sort(events);
+        events = sorter.sort(events); 
         sorter = new SortByTitle();
         events = sorter.sort(events);
+        
+        // Wendy: this is the filter you asked for. the format is: 
+        // standardDate~standardDate. see below for an example. 
+        String[] timeStampsRange = { "201108161130~201109140300"};
+        filter = new RangeOfDatesTimeFilter();
+        events = filter.filter(events,timeStampsRange);
+        
       //  HtmlFunctions writer=new HtmlFunctions();
        // writer.writeListOfEvents(events);
         
     }
-}
+}	
