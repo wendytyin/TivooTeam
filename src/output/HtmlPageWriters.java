@@ -15,7 +15,16 @@ import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
 public abstract class HtmlPageWriters {
-    private SortByStartDate startsort=new SortByStartDate();
+    private Html start;
+    private Body myBody;
+    private Node other;
+    
+    public HtmlPageWriters(String title,Body body, Node o){
+        start = writeHeader(title);
+        myBody=body;
+        other=o;
+    }
+    
     private final HashMap<Integer, String> daysOfWeek = new HashMap<Integer, String>();
     {
         daysOfWeek.put(1, "Sunday");
@@ -28,23 +37,53 @@ public abstract class HtmlPageWriters {
     }
 
     public void write(List<Event> events) {
+        events=sortByStartDate(events);
+        events=additionalFilter(events);
         DetailPage details=new DetailPage();
         for (Event e:events){
             details.writeEvent(e); //automatically writes detailed pages
-            writeEvent(e);
+            attachEvent(e, other);
         }
         closePages();
         System.out.println("finished all writing to file");
     }
 
-    private BufferedWriter openFile(File filename) throws IOException {
-        FileWriter fstream = new FileWriter(filename);
-        BufferedWriter out = new BufferedWriter(fstream);
-        return out;
+    protected List<Event> sortByStartDate(List<Event> events) {
+        SortByStartDate startsort=new SortByStartDate();
+        return startsort.sort(events);
+    }
+    protected abstract List<Event> additionalFilter(List<Event> events);
+    protected abstract void attachEvent(Event e, Node other2);
+
+    protected Html writeHeader(String text) {
+        Html start = new Html();
+        Head head = new Head();
+        start.appendChild(head);
+
+        Title title = new Title();
+        title.appendText(text);
+        head.appendChild(title);
+        return start;
     }
     
-    protected abstract void closePages();
+    protected Node writeDayOfWeek(int day) { //TODO: MOVE INTO SUMMARYLISTPAGE
+        H1 h1 = new H1();
+        h1.appendText(daysOfWeek.get(day));
+        return h1;
+    }
+    
+    protected void closePages(){
+        myBody.appendChild(other);
+        start.appendChild(myBody);
+        File filename=new File(getFileName());
+        writeToFile(filename, start);
+    }
 
+    /**
+     * Where to save the html file
+     */
+    protected abstract String getFileName();
+    
     protected void writeToFile(File filename, Html start) {
         BufferedWriter out = null;
         try {
@@ -70,28 +109,10 @@ public abstract class HtmlPageWriters {
         }
     }
 
-    protected abstract void writeEvent(Event e);
 
-    protected Html writeHeader(String text) {
-        Html start = new Html();
-        Head head = new Head();
-        start.appendChild(head);
-
-        Title title = new Title();
-        title.appendText(text);
-        head.appendChild(title);
-        return start;
+    private BufferedWriter openFile(File filename) throws IOException {
+        FileWriter fstream = new FileWriter(filename);
+        BufferedWriter out = new BufferedWriter(fstream);
+        return out;
     }
-    
-    protected Node writeDayOfWeek(int day) {
-        H1 h1 = new H1();
-        h1.appendText(daysOfWeek.get(day));
-        return h1;
-    }
-
-
-    protected List<Event> sortByStartDate(List<Event> events) {
-        return startsort.sort(events);
-    }
-
 }

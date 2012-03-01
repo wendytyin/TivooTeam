@@ -3,6 +3,7 @@ package output;
 import input.Event;
 
 import java.io.File;
+import java.util.List;
 
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.A;
@@ -11,9 +12,14 @@ import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Html;
 import com.hp.gagawa.java.elements.P;
 
-public class DetailPage extends HtmlPageWriters {
+public class DetailPage extends HtmlPageWriters{
 
-    public void writeEvent(Event e) {
+    public DetailPage() {
+        super(null,null,null); //TODO: FIX
+        
+    }
+
+    protected void writeEvent(Event e) {
         Html start=writeHeader(e.getTitle());
         Body body = new Body();
         body.appendChild(writeAllInEvent(e));
@@ -45,6 +51,22 @@ public class DetailPage extends HtmlPageWriters {
     @Override
     protected void closePages() {
         //Do nothing, it closes after every writeEvent
+    }
+
+    @Override
+    protected List<Event> additionalFilter(List<Event> events) {
+        return events; //no filter
+    }
+
+    @Override
+    protected String getFileName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected void attachEvent(Event e, Node other2) {
+        System.err.println("This should never have happened, DetailPage was called explicitly outside of HtmlPageWriters");
     }
 
 }

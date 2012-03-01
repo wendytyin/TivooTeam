@@ -13,28 +13,19 @@ import com.hp.gagawa.java.elements.*;
 public class SummaryListPage extends HtmlPageWriters {
 
     private int day = 8;
-    private Html start;
-    private Body body;
-    private Ul ul;
 
     public SummaryListPage(){
-        start=writeHeader("Summary_List");
-        body = new Body();
-        ul = new Ul();
-    }
-    public void write(List<Event> events) {
-        super.write(
-        sortByStartDate(events));
+        super("Summary_List",new Body(), new Ul());
     }
     
     // page containing all events, links to detailed pages
-    public void writeEvent(Event e) {
+    protected void attachEvent(Event e, Node o) {
         if (e.getDayOfWeek() != day) { // days of the week headers
             day = e.getDayOfWeek();
-            ul.appendChild(writeDayOfWeek(day));
+            ((Ul) o).appendChild(writeDayOfWeek(day));
         }
 
-        ul.appendChild(writeEventSummary(e));
+        ((Ul) o).appendChild(writeEventSummary(e));
     }
 
     private Node writeEventSummary(Event e) {
@@ -47,13 +38,14 @@ public class SummaryListPage extends HtmlPageWriters {
         li.appendText(e.getFormattedStartTime() + " | " + e.getFormattedEndTime());
         return li;
     }
-    
-    @Override
-    protected void closePages() {
-        body.appendChild(ul);
-        start.appendChild(body);
 
-        File filename = new File("output/summary_List.html");
-        writeToFile(filename,start);
+    @Override
+    protected String getFileName() {
+        return "output/summary_List.html";
+    }
+
+    @Override
+    protected List<Event> additionalFilter(List<Event> events) {
+        return events;  //no filter applied
     }
 }

@@ -11,70 +11,50 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.hp.gagawa.java.FertileNode;
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
 //TODO: make sure it doesn't show events in another month that happen to be the same week of the month
-public class CalendarWeekPage extends HtmlPageWriters {
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-            "yyyyMMdd");
-
-    private Html start;
-    private Body body;
-    private Table table;
-    private Tr currentRow;
+public class CalendarWeekPage extends CalendarPage {
+    
 
     public CalendarWeekPage() {
-        start = writeHeader("Calendar_Week");
-        body = new Body();
-        table = new Table();
-        table.setBorder("1px solid black");
-        table.appendChild(writeDaysOfWeekHeader());
-        writeEmptyWeek();
+        super("Calendar_Week",new Body(),new Table().setBorder("1px solid black"));
     }
-
-    private void writeEmptyWeek() {
-        currentRow = new Tr();
-        for (int i = 0; i < 7; i++) {
-            currentRow.appendChild(new Td().appendText("&nbsp;"));
-        }
-    }
-
-    private Node writeDaysOfWeekHeader() {
-        Tr tr = new Tr();
-        tr.appendChild(new Td().appendText("Sunday"));
-        tr.appendChild(new Td().appendText("Monday"));
-        tr.appendChild(new Td().appendText("Tuesday"));
-        tr.appendChild(new Td().appendText("Wednesday"));
-        tr.appendChild(new Td().appendText("Thursday"));
-        tr.appendChild(new Td().appendText("Friday"));
-        tr.appendChild(new Td().appendText("Saturday"));
-        return tr;
-    }
-
-    public void write(List<Event> events, String week) {
-        List<Event> filtered = filterByDate(events, week);
-        super.write(
-        sortByStartDate(filtered));
-    }
-
+    
     // page containing all events, links to detailed pages
-    public void writeEvent(Event e) {
-        Td currentSpot = (Td) currentRow.getChild(e.getDayOfWeek() - 1);
+    protected void attachEvent(Event e, Node o) {
+        if (((Table)o).children.size()==0){ //week table hasn't been initialized
+            createEmptyWeek((Table) o);
+        }
+        Tr row=(Tr) ((Table)o).getChild(1);
+        Td currentSpot = (Td) row.getChild(e.getDayOfWeek() - 1);
         writeEventSummary(e, currentSpot);
     }
 
+    private void createEmptyWeek(Table o) {
+        o.appendChild(writeDaysOfWeekHeader());
+        Tr tr=new Tr();
+        for (int i=0;i<7;i++){
+            tr.appendChild(new Td().setWidth("100px").setHeight("50px").appendText("&nbsp;"));
+        }
+        o.appendChild(tr);
+    }
+
     private void writeEventSummary(Event e, Td td) {
-        td.appendChild(new Hr());
+        Div div = new Div().setStyle("display:block;margin:3px;background:cyan;");
         A a = new A();
         a.setHref(e.getNameForFile() + ".html");
         a.appendText(e.getTitle());
-        td.appendChild(a);
-        td.appendChild(new Br());
-        td.appendText(e.getFormattedStartTime() + " | " + e.getFormattedEndTime());
+        div.appendChild(a);
+        div.appendChild(new Br());
+        div.appendText(e.getFormattedStartTime() + " | "
+                + e.getFormattedEndTime());
+        td.appendChild(div);
     }
 
-    private List<Event> filterByDate(List<Event> events, String week) {
+    protected List<Event> filterByDate(List<Event> events, String week) {
         if (week.length()<6){
             throw new Error("week must be of format yyyy## where ## is week of year");
         }
@@ -122,15 +102,9 @@ public class CalendarWeekPage extends HtmlPageWriters {
     }
 
     @Override
-    protected void closePages() {
-        table.appendChild(currentRow);
-        body.appendChild(table);
-        start.appendChild(body);
-
-        File filename = new File("output/Calendar_Week.html");
-        writeToFile(filename, start);
+    protected String getFileName() {
+        return "output/Calendar_Week.html";
     }
-
 //    public static void main(String[] args) {
 //        List<Event> tester = new ArrayList<Event>();
 //        tester.add(new Event("title1", "201201011100", "201201011300",

@@ -14,30 +14,15 @@ import java.util.List;
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
-public class CalendarDayPage extends HtmlPageWriters {
-
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-            "yyyyMMdd");
-
-    private Html start;
-    private Body body;
-    private Ul ul;
-
+public class CalendarDayPage extends CalendarPage {
+    
     public CalendarDayPage() {
-        start = writeHeader("Calendar_Day");
-        body = new Body();
-        ul=new Ul();
-    }
-
-    public void write(List<Event> events, String day) {
-        body.appendText("Day: "+day);
-        List<Event> filtered = filterByDay(events, day);
-        super.write(sortByStartDate(filtered));
+        super("Calendar_Day",new Body(),new Ul());
     }
 
     // page containing all events, links to detailed pages
-    public void writeEvent(Event e) {
-        ul.appendChild(writeEventSummary(e));
+    protected void attachEvent(Event e, Node other) {
+        ((Ul) other).appendChild(writeEventSummary(e));
     }
 
     private Node writeEventSummary(Event e) {
@@ -52,7 +37,7 @@ public class CalendarDayPage extends HtmlPageWriters {
     }
 
     // day will be a string of format yyyymmdd
-    private List<Event> filterByDay(List<Event> events, String day) {
+    protected List<Event> filterByDate(List<Event> events, String day) {
         List<Event> filt = null;
         try {
             Date iweek = simpleDateFormat.parse(day);
@@ -71,13 +56,8 @@ public class CalendarDayPage extends HtmlPageWriters {
         return filt;
     }
     
-    @Override
-    protected void closePages() {
-        body.appendChild(ul);
-        start.appendChild(body);
-
-        File filename = new File("output/Calendar_Day.html");
-        writeToFile(filename, start);
+    public String getFileName(){
+        return "output/Calendar_Day.html";
     }
 
 //    public static void main(String[] args) {
