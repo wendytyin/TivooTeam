@@ -15,8 +15,7 @@ import com.hp.gagawa.java.elements.P;
 public class DetailPage extends HtmlPageWriters{
 
     public DetailPage() {
-        super(null,null,null); //TODO: FIX
-        
+        super(null,null,null); //not necessary for super to have this
     }
 
     protected void writeEvent(Event e) {
@@ -54,11 +53,6 @@ public class DetailPage extends HtmlPageWriters{
     }
 
     @Override
-    protected List<Event> additionalFilter(List<Event> events) {
-        return events; //no filter
-    }
-
-    @Override
     protected String getFileName() {
         // TODO Auto-generated method stub
         return null;
@@ -67,6 +61,11 @@ public class DetailPage extends HtmlPageWriters{
     @Override
     protected void attachEvent(Event e, Node other2) {
         System.err.println("This should never have happened, DetailPage was called explicitly outside of HtmlPageWriters");
+    }
+
+    @Override
+    protected List<Event> applyFilter(List<Event> events) {
+        return events; //no filter
     }
 
 }

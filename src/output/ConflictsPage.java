@@ -23,7 +23,8 @@ public class ConflictsPage extends HtmlPageWriters {
 
     private Node writeEventSummary(Event e) {
         Li li = new Li();
-        if (e.getTitle().equals("<br />Next Conflict:")){
+        if (e.getTitle().equals("Next Conflict:")){
+            li.appendChild(new Hr());
             li.appendText(e.getTitle());
             return li;
         }
@@ -36,14 +37,9 @@ public class ConflictsPage extends HtmlPageWriters {
         return li;
     }
 
-    @Override
-    protected List<Event> additionalFilter(List<Event> events) {
-        return findConflicts(events);
-    }
-
-
     // removes all events without conflict in the list
     // This should really go into the processor area
+    //make sure to sort beforehand
     private List<Event> findConflicts(List<Event> events) {
         Event emptyOuter = new Event(null, null, null, null, null);
 
@@ -68,10 +64,10 @@ public class ConflictsPage extends HtmlPageWriters {
             if (starttime == 0 || endtime == 0
                     || (starttime < 0 && startendtime > 0) 
                     || (starttime > 0 && endstarttime < 0)) {
+                conflicting.add(new Event("Next Conflict:","000000000000","000000000000",null,null));
                 conflicting.add(previous);
                 conflicting.add(e);
-                conflicting.add(new Event("<br />Next Conflict:","000000000000","000000000000",null,null));
-            }
+                }
             previous=e;
         }
         return conflicting;
@@ -80,6 +76,13 @@ public class ConflictsPage extends HtmlPageWriters {
     @Override
     protected String getFileName() {
         return "output/ConflictsPage.html";
+    }
+
+    @Override
+    protected List<Event> applyFilter(List<Event> events) {
+        events=sortByStartDate(events);
+        events=findConflicts(events);
+        return events;
     }
     
 //    public static void main(String[]args){
