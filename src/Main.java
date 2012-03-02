@@ -28,10 +28,8 @@ public class Main {
 //        s2.parser();
 //        List<Event> events = s.mergeparser(s2);
         
-        //Wendy's test changes:
         String[] files={"resources/googlecal.xml","resources/dukecal.xml"};
-        util.chooseParsers(files);
-        List<Event>events=util.parser();
+        List<Event>events=util.parseFiles(files);
         
         
         FilterComponent filter = new KeywordFilter();

@@ -14,7 +14,12 @@ public class CalendarUtil {
 
     private static List<CalParser> parserList;
 
-    public void chooseParsers(String[] names) {
+    public List<Event> parseFiles(String[] files) {
+        chooseParsers(files);
+        return parser();
+    }
+    
+    private void chooseParsers(String[] names) {
         for (String name : names) {
             fileName = name;
             loadCalendarParser();
@@ -28,7 +33,7 @@ public class CalendarUtil {
         }
     }
 
-    public List<Event> parser() {
+    private List<Event> parser() {
         List<Event> events = new ArrayList<Event>();
         for (CalParser calParser : parserList) {
             events.addAll(calParser.parser());

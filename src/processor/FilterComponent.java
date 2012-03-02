@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class FilterComponent {
 
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmm");
+	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmm");
 	
 	public List<Event> filter(List<Event> events, String[] keyWords) 
 	{
