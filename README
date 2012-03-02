@@ -1,4 +1,4 @@
-Part 1 of our Tivoo
+Tivoo
 
 Group members: 
 Wendy Yin wendytyin@gmail.com
@@ -8,5 +8,8 @@ Shiyuan Wang wangshiyuan88@gmail.com
 
 UTA:
 Ashley Chou ayc6@duke.edu
+
+We chose to use a map of tags to text inside Events class. We know this is memory intensive, but as per our TA's instructions, a specific tag search requires this map. 
+You can see the old version (that used a HashSet of tags, and was less memory intensive) that filtered tags but not tags with keywords simultaneously in the history. 
 
 
