@@ -13,13 +13,7 @@ import org.jdom.input.SAXBuilder;
 public class NFLParser extends CalParser{
 	
 	public boolean isThisKindof() {
-
-		if (fileName.equals("resources/NFL.xml"))
-			return true;
-
-		else
-
-			return false;
+		return (fileName.equals("resources/NFL.xml"));
 	}
 
 		public ArrayList<Event> parseEvent(Element root){

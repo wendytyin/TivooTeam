@@ -9,12 +9,7 @@ import org.jdom.Element;
 public class DukeCalendarParser extends CalParser {
 
     public boolean isThisKindof() {
-        if (fileName.equals("resources/dukecal.xml"))
-            return true;
-
-        else
-
-            return false;
+        return (fileName.equals("resources/dukecal.xml"));
     }
 
     public ArrayList<Event> parseEvent(Element root) {

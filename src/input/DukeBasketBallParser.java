@@ -7,13 +7,7 @@ import org.jdom.Element;
 
 public class DukeBasketBallParser extends CalParser {
     public boolean isThisKindof() {
-
-        if (fileName.equals("resources/DukeBasketBall.xml"))
-            return true;
-
-        else
-
-            return false;
+        return (fileName.equals("resources/DukeBasketBall.xml"));
     }
 
     public ArrayList<Event> parseEvent(Element root) {

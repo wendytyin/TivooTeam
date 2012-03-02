@@ -9,12 +9,7 @@ public class TvParser extends CalParser{
 
 	@Override
 	public boolean isThisKindof() {
-		 if (fileName.equals("resources/tv.xml"))
-	            return true;
-
-	        else
-
-	            return false;
+		 return (fileName.equals("resources/tv.xml"));
 	}
 
 	@Override

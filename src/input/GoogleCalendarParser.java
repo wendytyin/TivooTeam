@@ -11,12 +11,7 @@ public class GoogleCalendarParser extends CalParser {
 
 	@Override
 	public boolean isThisKindof() {
-		if (fileName.equals("resources/googlecal.xml"))
-			return true;
-
-		else
-
-			return false;
+		return (fileName.equals("resources/googlecal.xml"));
 	}
 
 	public ArrayList<Event> parseEvent(Element root) {
