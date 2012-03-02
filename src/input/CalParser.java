@@ -43,37 +43,4 @@ public abstract class CalParser {
 		return events;
 	}
 	
-//    public List<Event> mergeparser(CalParser other)
-//    {
-//    	List<Event> newList = getEvents();
-//		newList.addAll(other.getEvents());
-//    	return newList;
-//    }
-//
-//	private List<Event> getEvents()
-//	{
-//		return events;
-//	}
-	
-	/*	public static List<Event> mergeparser()
-	{
-        loadParser();
-		ArrayList<Event> events = new ArrayList<Event>();
-		for(CalParser parser: parserList)
-		{  	
-		events.addAll(parser.parser());
-		}
-		return events;
-	}
-	
-	public static void loadParser()
-	{
-	    parserList = new ArrayList<CalParser>();
-		parserList.add(new DukeCalendarParser().loadFile("resources/dukecal.xml"));
-		parserList.add(new GoogleCalendarParser().loadFile("resources/googlecal.xml"));
-		parserList.add(new DukeBasketBallParser().loadFile("resources/DukeBasketBall.xml"));
-		parserList.add(new NFLParser().loadFile("resources/NFL.xml"));
-	//	parserList.add(new TvParser().loadFile("resources/tv.xml"));   // Tv.xml can not be loaded currently
-	}*/
-	
 }

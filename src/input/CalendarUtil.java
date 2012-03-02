@@ -36,16 +36,6 @@ public class CalendarUtil {
         return events;
     }
 
-     public CalParser chooseParser(String name) {
-     fileName = name;
-     loadCalendarParser();
-     for (CalParser calParser : calendarList) {
-     if (calParser.isThisKindof())
-     return calParser;
-     }
-     throw new Error("This calendar type "+name+" is not recognized.");
-     }
-
     private void loadCalendarParser() {
         calendarList = new ArrayList<CalParser>();
         calendarList.add(new GoogleCalendarParser().loadFile(fileName));
