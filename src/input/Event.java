@@ -1,22 +1,28 @@
 package input;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
 
-public class Event {
+
+public  class Event {
 	private String title;
 	private String starttime;
 	private String endtime;
 	private String link;
 	private String detail;
-
+	private Set<String> tagSet;
 
 	public Event(String otitle, String start, String end, String url,
-			String descri) {
+			String descri,Set<String> set) {
 		title = otitle;
 		starttime = start;
 		endtime = end;
 		link = url;
 		detail = descri;
+		tagSet = set;
 	}
 
 	public void stringOutput() {
@@ -75,8 +81,13 @@ public class Event {
 	public String getDetail() {
 		return detail;
 	}
-
-	public int getDayOfWeek() {
+    
+	public Set getTags()
+    {
+    	return tagSet;
+    }
+	
+    public int getDayOfWeek() {
 		Calendar weeks = Calendar.getInstance();
 		String time1 = getStartTime();
 		String year = time1.substring(0, 4);
@@ -88,8 +99,7 @@ public class Event {
 		int weekday = weeks.get(Calendar.DAY_OF_WEEK);
 		return weekday;
 	}
-
-
+    
 	/**
 	 * @return -1 if time2 less than time1, 0 if =, 1 if time2 greater than time1
 	 */

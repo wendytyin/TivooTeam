@@ -21,6 +21,7 @@ public class Main {
     	String[] keyWords= {"Meet", "Apple"};
     	String[] timeStamps = { "201108161130", "201109140300"};
     	String[] details = {"Ben Affleck", "Amy Ryan"}; 
+    	String[] tags = {"Actor", "Director"};
         CalendarUtil util = new CalendarUtil();
 //        CalParser s = util.chooseParser("resources/googlecal.xml");
 //        CalParser s2 = util.chooseParser("resources/dukecal.xml");
@@ -40,6 +41,8 @@ public class Main {
         events = filter.filter(events,timeStamps);
         filter = new DetailFilter();
         events = filter.filter(events,details); 
+        filter = new TagFilter();
+        events = filter.filter(events, tags);
         Sorters sorter = new SortByStartDate();
         events = sorter.sort(events);
         sorter = new SortByEndDate();

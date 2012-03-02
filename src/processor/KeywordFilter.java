@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.jdom.JDOMException;
 
-public class KeywordFilter extends FilterComponent{
-
+public class KeywordFilter extends FilterComponent
+{
     @Override
-    boolean filterSpecificEvent(Event i, String keyWord) {
+    boolean filterSpecificEvent(Event i, String keyWord) 
+    {
         return(i.getTitle().contains(keyWord));
     }
 }

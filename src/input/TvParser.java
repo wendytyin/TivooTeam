@@ -1,7 +1,9 @@
 package input;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jdom.Element;
 
@@ -9,7 +11,7 @@ public class TvParser extends CalParser{
 
 	@Override
 	public boolean isThisKindof() {
-		 return (fileName.equals("resources/tv.xml"));
+		 return ("resources/tv.xml").contains(fileName);
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class TvParser extends CalParser{
 	        ArrayList<Event> filterEvents = new ArrayList<Event>();
 
 	        for (int i = 0; i < events.size(); i++) {
-
+	        	Set<String> tagSet = super.getTags(events.get(i),new HashSet<String>());
 	            String title = events.get(i).getChildText("title");
 	            String starttime = events.get(i).getAttributeValue("start").substring(0,12);
 	            String endtime = events.get(i).getAttributeValue("end").substring(0,12);
@@ -28,16 +30,12 @@ public class TvParser extends CalParser{
 	            StringBuilder str = new StringBuilder();
 	            str.append(events.get(i).getChildText("descr")+" ActorList: ");
 	            ArrayList<Element>actorlist = (ArrayList<Element>) events.get(i).getChildren("actor");
+	            List<String>actors = new ArrayList<String>();
 	            for(int j = 0; j< actorlist.size(); j++)
 	            {
-	            	if(j==actorlist.size()-1)
-	            		str.append(actorlist.get(i).getText()+".");
-	            		
-	            	else
-	            	
-	            		str.append(actorlist.get(i).getText()+" ");
+	            	actors.add(actorlist.get(i).getText());
 	            }
-	            Event event = new Event(title,starttime,endtime,link,str.toString());
+	            Event event = new TvEvent(title,starttime,endtime,link,str.toString(),actors,tagSet);
 	            filterEvents.add(event);
 
 	        }

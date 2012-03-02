@@ -1,15 +1,17 @@
 package input;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import org.jdom.Element;
 
 public class DukeCalendarParser extends CalParser {
-
+//    private List<Event>eventList;
     public boolean isThisKindof() {
-        return (fileName.equals("resources/dukecal.xml"));
+        return ("resources/dukecal.xml").contains(fileName);
     }
 
     public ArrayList<Event> parseEvent(Element root) {
@@ -17,7 +19,7 @@ public class DukeCalendarParser extends CalParser {
         ArrayList<Event> filterEvents = new ArrayList<Event>();
 
         for (int i = 0; i < events.size(); i++) {
-
+            Set<String> tagSet = super.getTags(events.get(i),new HashSet<String>());
             String title = events.get(i).getChildText("summary");
             String temp = events.get(i).getChild("start").getChildText("unformatted");
             String starttime = null;
@@ -38,11 +40,10 @@ public class DukeCalendarParser extends CalParser {
            
             String link = events.get(i).getChildText("link");
             String description = events.get(i).getChildText("description");
-            Event event = new Event(title,starttime,endtime,link,description);
+            Event event = new DukeCalEvent(title,starttime,endtime,link,description,tagSet);
             filterEvents.add(event);
 
         }
-
         return filterEvents;
     }
 

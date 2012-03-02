@@ -14,7 +14,7 @@ public class RangeOfDatesTimeFilter extends FilterComponent {
 			Date eventDate = parseStringYMdhmToDate(i.getStartTime());
 			Date start = parseStringYMdhmToDate(splitStringArray[0]);
 			Date end = parseStringYMdhmToDate(splitStringArray[1]);
-			
+
 			if(eventDate.getTime() >= start.getTime() && eventDate.getTime() <=end.getTime()){
 				return true; 
 			}

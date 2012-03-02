@@ -29,7 +29,7 @@ public class SummaryListPage extends HtmlPageWriters {
     }
     
     // page containing all events, links to detailed pages
-    protected void attachEvent(Event e, Node o) { //TODO: MAINTAIN SORTED ORDER
+    protected void attachEvent(Event e, Node o) {
         if (e.getDayOfWeek() != day) { // days of the week headers
             day = e.getDayOfWeek();
             ((Ul) o).appendChild(writeDayOfWeek(day));

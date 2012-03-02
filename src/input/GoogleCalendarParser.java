@@ -2,20 +2,22 @@ package input;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jdom.Element;
 
 public class GoogleCalendarParser extends CalParser {
-
+//    private List<Event> eventList;
 	@Override
 	public boolean isThisKindof() {
-		return (fileName.equals("resources/googlecal.xml"));
+//		System.out.println(fileName);
+		return ("resources/googlecal.xml").contains(fileName);
 	}
 
 	public ArrayList<Event> parseEvent(Element root) {
-		// CalendarUtil cal = new CalendarUtil();
 
 		List<Element> events = root.getChildren();
 
@@ -26,7 +28,7 @@ public class GoogleCalendarParser extends CalParser {
 		for (int i = 0; i < entry.size(); i++) {
 
 			Map<String, Element> componentMap = forComponent(entry.get(i));
-
+            Set<String> tagSet = super.getTags(entry.get(i),new HashSet<String>());
 			String[] date = componentMap.get("content").getText().split(" ");
 			String startTime = null;
 			String endTime = null;
@@ -43,34 +45,25 @@ public class GoogleCalendarParser extends CalParser {
 			if (date[0].equals("Recurring")) {
 				String firstDateStamp = date[4].replaceAll("-", "");
 				str = str.append(firstDateStamp);
-				String temp[] = date[5].split(":");
 				startTime = str.toString()+date[5].replaceAll(":","").substring(0,4);
 				endTime = startTime;
-				
 				//int duration = Integer.parseInt(date[9]);
 				//endTime = startTime.substring(0,8)+Integer.toString((Integer.parseInt(startTime.substring(8,10))+duration/60))
 				//		+Integer.toString((Integer.parseInt(startTime.substring(10))+duration%60));
 				
 			}
 
-			String content = componentMap.get("content").getText();
-			
-/*			if (content.indexOf("EDT") != -1) {
-				startTime = content.substring(0, content.indexOf("EDT"));
-			} else {
-				startTime = content.substring(0, content.indexOf("<"));
-			}*/
-
-			Event event = new Event(componentMap.get("title").getText(),
+			Event event = new GoogleCalendarEvent(componentMap.get("title").getText(),
 					startTime, endTime, componentMap.get("id")
-							.getText(),"");
+							.getText(),"",tagSet);
 			filterEvents.add(event);
 
 		}
+//		eventList = filterEvents;
 		return filterEvents;
 	}
 
-	private Map forComponent(Element entry) {
+    private Map forComponent(Element entry) {
 		Map<String, Element> componentMap = new HashMap<String, Element>();
 		List<Element> entryChildren = entry.getChildren();
 		for (Element e : entryChildren) {

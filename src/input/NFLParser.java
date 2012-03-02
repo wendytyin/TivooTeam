@@ -2,7 +2,9 @@ package input;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import org.jdom.Document;
@@ -13,19 +15,20 @@ import org.jdom.input.SAXBuilder;
 public class NFLParser extends CalParser{
 	
 	public boolean isThisKindof() {
-		return (fileName.equals("resources/NFL.xml"));
+
+	return ("resources/NFL.xml").contains(fileName);
 	}
 
 		public ArrayList<Event> parseEvent(Element root){
 			List<Element> events = root.getChildren("row"); 
 			ArrayList<Event> filterEvents  = new ArrayList<Event>();
 			for(int i = 0; i <events.size(); i++){
+				Set<String>tagSet = super.getTags(events.get(i),new HashSet());
 				String title = events.get(i).getChildText("Col1");			
-
 				String link = events.get(i).getChildText("Col2");
 				String starttime = genTimeStamp(events.get(i).getChildText("Col8"));
 				String endtime = genTimeStamp(events.get(i).getChildText("Col9"));
-                Event event = new Event(title,starttime,endtime,link,"");
+                Event event = new NFLEvent(title,starttime,endtime,link,"",tagSet);
                 filterEvents.add(event);
 			}
 			return filterEvents;

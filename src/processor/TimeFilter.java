@@ -8,11 +8,13 @@ import java.util.List;
 
 import input.Event;
 
-public class TimeFilter extends FilterComponent{
-
+public class TimeFilter extends FilterComponent
+{
     @Override
-    boolean filterSpecificEvent(Event i, String keyWord) {
-        if (i.getStartTime() == null) { 
+    boolean filterSpecificEvent(Event i, String keyWord) 
+    {
+        if (i.getStartTime() == null) 
+        {
             return true; 
         }
 
@@ -20,10 +22,11 @@ public class TimeFilter extends FilterComponent{
         Date eventDate = parseStringYMdhmToDate(i.getStartTime());
         long bias = eventDate.getTime() / 86400000 - standard.getTime()
                 / 86400000;
-        if (bias <= 7 && bias >= 0) {
+        
+        if (bias <= 7 && bias >= 0) 
+        {
             return true;
         }
         return false;
-    }
-    
-}   
+    }    
+}

@@ -1,32 +1,39 @@
 package input;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.jdom.Element;
 
 public class DukeBasketBallParser extends CalParser {
     public boolean isThisKindof() {
-        return (fileName.equals("resources/DukeBasketBall.xml"));
+        return ("resources/DukeBasketBall.xml").contains(fileName);
     }
 
     public ArrayList<Event> parseEvent(Element root) {
         List<Element> events = root.getChildren("Calendar");
+        
         ArrayList<Event> filterEvents = new ArrayList<Event>();
         for (int i = 0; i < events.size(); i++) {
-            
+            Set<String> tagSet = new HashSet<String>();
+            tagSet = super.getTags(events.get(i),tagSet);
             String title = events.get(i).getChildText("Subject");
             String starttime = genTimeStamp(events.get(i).getChildText("StartDate"),events.get(i).getChildText("StartTime"));
             String endtime = genTimeStamp(events.get(i).getChildText("EndDate"),events.get(i).getChildText("EndTime"));
             String link = events.get(i).getChildText("Description");
             link = link.substring(link.indexOf("http"));
-            Event event = new Event(title,starttime,endtime,link,"");
+            Event event = new DukeBasketBallEvent(title,starttime,endtime,link,"", tagSet);
             filterEvents.add(event);
         }
         return filterEvents;
     }
     private String genTimeStamp(String date, String detail)
-    {   System.out.println(date+" "+detail);
+    {   
+//        System.out.println(date+" "+detail);
     	String time[] = date.split("/");
         for (int j = 0; j < 2; j++) {
             if (time[j].length() == 1) {
@@ -42,7 +49,9 @@ public class DukeBasketBallParser extends CalParser {
         }
         if(temp[0].length()==1)
         	temp[0]="0"+temp[0];
-        System.out.println(time[2]+time[0]+time[1]+temp[0]+temp[1]);
+//        System.out.println(time[2]+time[0]+time[1]+temp[0]+temp[1]);
          return time[2]+time[0]+time[1]+temp[0]+temp[1];
     }
+    
+    
 }
