@@ -25,8 +25,6 @@ public class CalendarUtil {
             loadCalendarParser();
             for (CalParser calParser : calendarList) {
                 if (calParser.isThisKindof()) {
-
-                    System.out.println("!");
                     parserList.add(calParser);
                 }
             }

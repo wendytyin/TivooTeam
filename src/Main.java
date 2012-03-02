@@ -35,14 +35,15 @@ public class Main {
         
         FilterComponent filter = new KeywordFilter();
         events = filter.filter(events,keyWords);
-        filter = new ExcludeFilter();
-        events = filter.filter(events, keyWords);
-        filter = new TimeFilter();
-        events = filter.filter(events,timeStamps);
-        filter = new DetailFilter();
-        events = filter.filter(events,details); 
-        filter = new TagFilter();
-        events = filter.filter(events, tags);
+//        filter = new ExcludeFilter();
+//        events = filter.filter(events, keyWords);
+//        filter = new TimeFilter();
+//        events = filter.filter(events,timeStamps);
+//        filter = new DetailFilter();
+//        events = filter.filter(events,details); 
+//        filter = new TagFilter();
+//        events = filter.filter(events, tags);
+        
         Sorters sorter = new SortByStartDate();
         events = sorter.sort(events);
         sorter = new SortByEndDate();
@@ -52,15 +53,14 @@ public class Main {
         
         // Wendy: this is the filter you asked for. the format is: 
         // standardDate~standardDate. see below for an example. 
-        String[] timeStampsRange = { "201108161130~201109140300"};
-        filter = new RangeOfDatesTimeFilter();
-        events = filter.filter(events,timeStampsRange);
+//        String[] timeStampsRange = { "201108161130~201110010300"};
+//        filter = new RangeOfDatesTimeFilter();
+//        events = filter.filter(events,timeStampsRange);
         
-        //xmlsource-tagname-keyword. * is a wildcard
-        String[] xmlFileSpecific = {"GoogleCalendarEvent-*-Meet"};
+        String[] xmlFileSpecific = {"GoogleCalendarEvent~Title~Meet"};
         filter=new SpecificXMLFilter();
         events=filter.filter(events,xmlFileSpecific);
-        
+
         HtmlPageWriters writer=new SummaryListPage();
         writer.write(events);
         
