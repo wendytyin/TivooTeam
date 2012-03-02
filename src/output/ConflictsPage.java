@@ -41,7 +41,7 @@ public class ConflictsPage extends HtmlPageWriters {
     // This should really go into the processor area
     //make sure to sort beforehand
     private List<Event> findConflicts(List<Event> events) {
-        Event emptyOuter = new Event(null, null, null, null, null);
+        Event emptyOuter = new Event(null, null, null, null, null, null);
 
         List<Event> conflicting = new ArrayList<Event>();
         Event previous = null;
@@ -64,7 +64,7 @@ public class ConflictsPage extends HtmlPageWriters {
             if (starttime == 0 || endtime == 0
                     || (starttime < 0 && startendtime > 0) 
                     || (starttime > 0 && endstarttime < 0)) {
-                conflicting.add(new Event("Next Conflict:","000000000000","000000000000",null,null));
+                conflicting.add(new Event("Next Conflict:","000000000000","000000000000",null,null, null));
                 conflicting.add(previous);
                 conflicting.add(e);
                 }
@@ -87,8 +87,8 @@ public class ConflictsPage extends HtmlPageWriters {
     
 //    public static void main(String[]args){
 //        List<Event>tester=new ArrayList<Event>();
-//        tester.add(new Event("title1","201101011100","201101011300","www.google.com","descrp1"));
-//        tester.add(new Event("title2","201101011200","201101011600","www.yahoo.com","descrp2"));
+//        tester.add(new Event("title1","201101011100","201101011300","www.google.com","descrp1", null));
+//        tester.add(new Event("title2","201101011200","201101011600","www.yahoo.com","descrp2", null));
 //        ConflictsPage something=new ConflictsPage();
 //        something.write(tester);
 //    }
