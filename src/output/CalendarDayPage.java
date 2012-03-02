@@ -1,11 +1,13 @@
 package output;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import input.Event;
 
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
-//THIS IS DONE
 public class CalendarDayPage extends CalendarPage {
 
     public CalendarDayPage() {
@@ -62,6 +64,6 @@ public class CalendarDayPage extends CalendarPage {
 //     "www.yahoo.com", "descrp2"));
 //     CalendarDayPage something = new CalendarDayPage();
 //     something.write(tester);
-////     something.write(tester, "20120101");
+//     something.write(tester, "20120101");
 //     }
 }

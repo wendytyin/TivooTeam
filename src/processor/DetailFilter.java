@@ -1,7 +1,6 @@
 package processor;
 
 import input.Event; 
-import java.util.*;
 
 import org.jdom.JDOMException;
 

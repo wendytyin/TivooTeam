@@ -123,7 +123,7 @@ public class GoogleCalendarParser extends CalParser {
 
 	}
 	
-	public String genDetailTime(String time)
+	private String genDetailTime(String time)
 	{   String[] temp = null;
 		if(!time.contains("pm")&&!time.contains("am"))
 			return "0000";

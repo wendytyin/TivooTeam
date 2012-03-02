@@ -31,7 +31,7 @@ public class DukeBasketBallParser extends CalParser {
         }
         return filterEvents;
     }
-    public String genTimeStamp(String date, String detail)
+    private String genTimeStamp(String date, String detail)
     {   System.out.println(date+" "+detail);
     	String time[] = date.split("/");
         for (int j = 0; j < 2; j++) {

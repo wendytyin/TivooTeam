@@ -2,7 +2,9 @@ package output;
 
 import input.Event;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;

@@ -37,7 +37,7 @@ public class NFLParser extends CalParser{
 			return filterEvents;
 		}
 	
-      public String genTimeStamp(String time)
+      private String genTimeStamp(String time)
       {
     	  String[] temp = time.split(" ");
     	  String date = temp[0].replace("-","");
