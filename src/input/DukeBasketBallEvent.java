@@ -6,7 +6,7 @@ import java.util.Set;
 public class DukeBasketBallEvent extends Event  {
 	
 	public DukeBasketBallEvent(String otitle, String start, String end, String url,
-			String descri, Set<String> set) {
+			String descri, Map<String,String>set) {
 		super(otitle, start, end, url, descri,set);
 	}
 	

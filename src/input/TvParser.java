@@ -1,8 +1,10 @@
 package input;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jdom.Element;
@@ -17,12 +19,12 @@ public class TvParser extends CalParser{
 	@Override
 	public ArrayList<Event> parseEvent(Element root) {
 	 
-		    List<Element> events = root.getChildren("prgramme");
+		    List<Element> events = root.getChildren("programme");
 	  
 	        ArrayList<Event> filterEvents = new ArrayList<Event>();
 
 	        for (int i = 0; i < events.size(); i++) {
-	        	Set<String> tagSet = super.getTags(events.get(i),new HashSet<String>());
+	        	Map<String,String> tagSet = super.getTags(events.get(i),new HashMap<String,String>());
 	            String title = events.get(i).getChildText("title");
 	            String starttime = events.get(i).getAttributeValue("start").substring(0,12);
 	            String endtime = events.get(i).getAttributeValue("end").substring(0,12);

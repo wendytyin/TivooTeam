@@ -1,8 +1,10 @@
 package input;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
@@ -19,7 +21,7 @@ public class DukeCalendarParser extends CalParser {
         ArrayList<Event> filterEvents = new ArrayList<Event>();
 
         for (int i = 0; i < events.size(); i++) {
-            Set<String> tagSet = super.getTags(events.get(i),new HashSet<String>());
+            Map<String,String> tagSet = super.getTags(events.get(i),new HashMap<String,String>());
             String title = events.get(i).getChildText("summary");
             String temp = events.get(i).getChild("start").getChildText("unformatted");
             String starttime = null;

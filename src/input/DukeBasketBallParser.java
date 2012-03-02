@@ -19,14 +19,16 @@ public class DukeBasketBallParser extends CalParser {
         
         ArrayList<Event> filterEvents = new ArrayList<Event>();
         for (int i = 0; i < events.size(); i++) {
-            Set<String> tagSet = new HashSet<String>();
-            tagSet = super.getTags(events.get(i),tagSet);
+            Map<String,String> tags = new HashMap<String,String>();
+            tags = super.getTags(events.get(i),tags);
+            
             String title = events.get(i).getChildText("Subject");
             String starttime = genTimeStamp(events.get(i).getChildText("StartDate"),events.get(i).getChildText("StartTime"));
             String endtime = genTimeStamp(events.get(i).getChildText("EndDate"),events.get(i).getChildText("EndTime"));
             String link = events.get(i).getChildText("Description");
             link = link.substring(link.indexOf("http"));
-            Event event = new DukeBasketBallEvent(title,starttime,endtime,link,"", tagSet);
+            
+            Event event = new DukeBasketBallEvent(title,starttime,endtime,link,"", tags);
             filterEvents.add(event);
         }
         return filterEvents;

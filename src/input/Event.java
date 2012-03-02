@@ -2,29 +2,34 @@ package input;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 
-public  class Event {
+public class Event {
 	private String title;
 	private String starttime;
 	private String endtime;
 	private String link;
 	private String detail;
-	private Set<String> tagSet;
+	private Map<String,String>tags;
 
 	public Event(String otitle, String start, String end, String url,
-			String descri,Set<String> set) {
+			String descri,Map<String,String> set) {
 		title = otitle;
 		starttime = start;
 		endtime = end;
 		link = url;
 		detail = descri;
-		tagSet = set;
+		tags = set;
 	}
-
+	public boolean isThisKindOfEvent(String type){
+	    return type.equals("*");
+	}
+	
 	public void stringOutput() {
 		System.out.println("Title : " + title);
 
@@ -82,10 +87,15 @@ public  class Event {
 		return detail;
 	}
     
-	public Set getTags()
+	public Set<String> getTags()
     {
-    	return tagSet;
+	    HashSet<String>copy=new HashSet<String>();
+	    copy.addAll(tags.keySet()); //on the off chance someone tries to change the set
+    	return copy;
     }
+	public Map<String,String> getSubTags(){
+	    return Collections.unmodifiableMap(tags);
+	}
 	
     public int getDayOfWeek() {
 		Calendar weeks = Calendar.getInstance();

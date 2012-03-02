@@ -56,6 +56,11 @@ public class Main {
         filter = new RangeOfDatesTimeFilter();
         events = filter.filter(events,timeStampsRange);
         
+        //xmlsource-tagname-keyword. * is a wildcard
+        String[] xmlFileSpecific = {"GoogleCalendarEvent-*-Meet"};
+        filter=new SpecificXMLFilter();
+        events=filter.filter(events,xmlFileSpecific);
+        
         HtmlPageWriters writer=new SummaryListPage();
         writer.write(events);
         

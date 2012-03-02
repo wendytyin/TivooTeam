@@ -28,7 +28,7 @@ public class GoogleCalendarParser extends CalParser {
 		for (int i = 0; i < entry.size(); i++) {
 
 			Map<String, Element> componentMap = forComponent(entry.get(i));
-            Set<String> tagSet = super.getTags(entry.get(i),new HashSet<String>());
+            Map<String,String> tagSet = super.getTags(entry.get(i),new HashMap<String,String>());
 			String[] date = componentMap.get("content").getText().split(" ");
 			String startTime = null;
 			String endTime = null;

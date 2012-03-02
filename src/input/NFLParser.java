@@ -2,8 +2,10 @@ package input;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
@@ -23,7 +25,7 @@ public class NFLParser extends CalParser{
 			List<Element> events = root.getChildren("row"); 
 			ArrayList<Event> filterEvents  = new ArrayList<Event>();
 			for(int i = 0; i <events.size(); i++){
-				Set<String>tagSet = super.getTags(events.get(i),new HashSet());
+				Map<String,String>tagSet = super.getTags(events.get(i),new HashMap<String,String>());
 				String title = events.get(i).getChildText("Col1");			
 				String link = events.get(i).getChildText("Col2");
 				String starttime = genTimeStamp(events.get(i).getChildText("Col8"));
@@ -43,8 +45,4 @@ public class NFLParser extends CalParser{
     	  return date+temp[0]+temp[1];
       }
 
-
-
 }
-
-
