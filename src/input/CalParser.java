@@ -15,10 +15,8 @@ import org.jdom.input.SAXBuilder;
 public abstract class CalParser {
 
 	protected String fileName;
-	private String keyWord; // What are these?
-	private Stack<Element> refinedEvents; // What are these?
-    private static List<CalParser> parserList ;
     private List<Event> events;
+    
 	public CalParser loadFile(String name) {
 		fileName = name;
 		return this;
@@ -45,17 +43,17 @@ public abstract class CalParser {
 		return events;
 	}
 	
-    public List<Event> mergeparser(CalParser other)
-    {
-    	List<Event> newList = getEvents();
-		newList.addAll(other.getEvents());
-    	return newList;
-    }
-
-	public List<Event> getEvents()
-	{
-		return events;
-	}
+//    public List<Event> mergeparser(CalParser other)
+//    {
+//    	List<Event> newList = getEvents();
+//		newList.addAll(other.getEvents());
+//    	return newList;
+//    }
+//
+//	private List<Event> getEvents()
+//	{
+//		return events;
+//	}
 	
 	/*	public static List<Event> mergeparser()
 	{

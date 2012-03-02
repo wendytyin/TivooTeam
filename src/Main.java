@@ -22,11 +22,18 @@ public class Main {
     	String[] timeStamps = { "201108161130", "201109140300"};
     	String[] details = {"Ben Affleck", "Amy Ryan"}; 
         CalendarUtil util = new CalendarUtil();
-        CalParser s = util.chooseParser("resources/googlecal.xml");
-        CalParser s2 = util.chooseParser("resources/dukecal.xml");
-        s.parser(); // Elements in all kind of XML will be extracted.
-        s2.parser();
-        List<Event> events = s.mergeparser(s2);
+//        CalParser s = util.chooseParser("resources/googlecal.xml");
+//        CalParser s2 = util.chooseParser("resources/dukecal.xml");
+//        s.parser(); // Elements in all kind of XML will be extracted.
+//        s2.parser();
+//        List<Event> events = s.mergeparser(s2);
+        
+        //Wendy's test changes:
+        String[] files={"resources/googlecal.xml","resources/dukecal.xml"};
+        util.chooseParsers(files);
+        List<Event>events=util.parser();
+        
+        
         FilterComponent filter = new KeywordFilter();
         events = filter.filter(events,keyWords);
         filter = new ExcludeFilter();
@@ -48,8 +55,8 @@ public class Main {
         filter = new RangeOfDatesTimeFilter();
         events = filter.filter(events,timeStampsRange);
         
-      //  HtmlFunctions writer=new HtmlFunctions();
-       // writer.writeListOfEvents(events);
+        HtmlPageWriters writer=new SummaryListPage();
+        writer.write(events);
         
     }
 }	
