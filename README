@@ -15,3 +15,12 @@ The changes are:
 -made getFileName public. Now Calendar Month and Calendar Day will show the last month/day file that was written
 -cleared the html body each time .write is called
 -cleared the map inside CalendarPage after all calendar pages have been written
+
+If you want to reload the html page, just click on its menu button again.
+
+Resources used:
+
+http://mindprod.com/jgloss/jscrollpane.html
+http://docs.oracle.com/javase/tutorial/uiswing/components
+http://docs.oracle.com/javase/1.5.0/docs/api/java/awt/event/ActionEvent.html
+http://stackoverflow.com/questions/614297/using-jeditorpane-and-its-setpage-method
