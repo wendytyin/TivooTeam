@@ -53,7 +53,7 @@ public class DetailPage extends HtmlPageWriters{
     }
 
     @Override
-    protected String getFileName() {
+    public String getFileName() {
         // TODO Auto-generated method stub
         return null;
     }

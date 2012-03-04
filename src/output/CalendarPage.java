@@ -25,6 +25,8 @@ public abstract class CalendarPage extends HtmlPageWriters {
             swapNodes(datePages.get(k));
             super.closePages();
         }
+        swapNodes(null);
+        datePages.clear();
     }
 
     public String getFileName() {

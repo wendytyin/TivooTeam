@@ -1,15 +1,17 @@
-Tivoo
+Tivoo-Gui
 
-Group members: 
 Wendy Yin wendytyin@gmail.com
-Sunny Sun <aznhui@gmail.com>
-Jordan Walsh jwalsh4867@gmail.com,
-Shiyuan Wang wangshiyuan88@gmail.com
+
+Date: 4 March 2012
+Estimated time (gui only): 4 hrs
 
 UTA:
 Ashley Chou ayc6@duke.edu
 
-We chose to use a map of tags to text inside Events class. We know this is memory intensive, but as per our TA's instructions, a specific tag search requires this map. 
-You can see the old version (that used a HashSet of tags, and was less memory intensive) that filtered tags but not tags with keywords simultaneously in the history. 
-
-
+Notes: Choose files button overwrites all old files that were chosen. However, you can choose multiple files by holding down ctrl+ clicking. I think this is a little more intuitive to regular computer users.
+Not all filters/sorts have been implemented in the menu, but adding the rest would just be copy-and-paste, change a few names. Note that summary list, calendar month, and conflicts automatically sort by start date, ascending.
+Made a few modifications to the output files (CalendarPage, HtmlPageWriters) to make it easier for the Model to deal with reloading files (before, it'd add on to the old page, instead of overwriting) and showing the right files. 
+The changes are:
+-made getFileName public. Now Calendar Month and Calendar Day will show the last month/day file that was written
+-cleared the html body each time .write is called
+-cleared the map inside CalendarPage after all calendar pages have been written

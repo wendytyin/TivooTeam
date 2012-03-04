@@ -56,7 +56,7 @@ public class SummaryListPage extends HtmlPageWriters {
     }
 
     @Override
-    protected String getFileName() {
+    public String getFileName() {
         return "output/summary_List.html";
     }
 

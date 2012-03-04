@@ -74,7 +74,7 @@ public class ConflictsPage extends HtmlPageWriters {
     }
     
     @Override
-    protected String getFileName() {
+    public String getFileName() {
         return "output/ConflictsPage.html";
     }
 

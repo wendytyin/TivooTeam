@@ -10,12 +10,13 @@ import java.util.List;
 
 import processor.SortByStartDate;
 
+import com.hp.gagawa.java.FertileNode;
 import com.hp.gagawa.java.Node;
 import com.hp.gagawa.java.elements.*;
 
 public abstract class HtmlPageWriters {
 
-    private Html start; //will need to have options for multiple html threads at same time in a single object
+    private Html start;
     private Body myBody;
     private Node other;
     
@@ -26,6 +27,9 @@ public abstract class HtmlPageWriters {
     }
 
     public void write(List<Event> events) {
+        if (other!=null){
+        ((FertileNode)other).children.clear(); //reset children
+        }
         events=applyFilter(events);
         DetailPage details=new DetailPage();
         for (Event e:events){
@@ -38,7 +42,6 @@ public abstract class HtmlPageWriters {
 
     protected abstract List<Event> applyFilter(List<Event> events);
 
-    //TODO: REMOVE
     protected List<Event> sortByStartDate(List<Event> events) {
         SortByStartDate startsort=new SortByStartDate();
         return startsort.sort(events);
@@ -69,7 +72,7 @@ public abstract class HtmlPageWriters {
     /**
      * Where to save the html file
      */
-    protected abstract String getFileName();
+    public abstract String getFileName();
     
     protected void writeToFile(File filename, Html start) {
         BufferedWriter out = null;
@@ -96,7 +99,7 @@ public abstract class HtmlPageWriters {
         }
     }
     protected void swapNodes(Node n){
-        other=n;
+        other= n;
     }
 
 
