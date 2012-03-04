@@ -136,13 +136,29 @@ public class GuiView extends JFrame {
 
         JMenuItem exclude = new JMenuItem("Exclude keyword");
         exclude.setActionCommand("Exclude Keyword");
-        exclude.addActionListener(new FilterListener());         
-        //etc.
-
+        exclude.addActionListener(new FilterListener());   
+        
+        JMenuItem tag = new JMenuItem("Filter By Tag");
+        tag.setActionCommand("Filter By Tags");
+        tag.addActionListener(new FilterListener());   
+        
+        JMenuItem specific = new JMenuItem(
+                "Filter By XML File, Keyword in specific tag");
+        specific.setActionCommand(
+                "Filter By XML File, Keyword in specific tag");
+        specific.addActionListener(new FilterListener()); 
+        
         JMenuItem titlesort = new JMenuItem("Sort by title");
         titlesort.setActionCommand("Sort by title");
         titlesort.addActionListener(new SortListener());  
-        //etc.
+        
+        JMenuItem startsort = new JMenuItem("Sort by starttime");
+        startsort.setActionCommand("Sort by start time");
+        startsort.addActionListener(new SortListener());  
+        
+        JMenuItem endsort = new JMenuItem("Sort by endtime");
+        endsort.setActionCommand("Sort by end time");
+        endsort.addActionListener(new SortListener());  
         
         JMenuItem reset = new JMenuItem("Reset all filters");
         reset.addActionListener(new ActionListener() {
@@ -157,7 +173,11 @@ public class GuiView extends JFrame {
         filters.add(detail);
         filters.add(timestamp);
         filters.add(exclude);
+        filters.add(tag);
+        filters.add(specific);
         filters.add(titlesort);
+        filters.add(startsort);
+        filters.add(endsort);
         filters.add(reset);
         return filters;
 
